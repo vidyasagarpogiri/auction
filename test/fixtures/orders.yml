@@ -1,0 +1,39 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  stock_id: 1
+  productname: MyString
+  productprice: 1
+  shippingfee: 1
+  shippingway: MyString
+  shippingcode: MyString
+  ordernum: MyString
+  paydate: 2013-07-16
+  paytime: MyString
+  payaccount: MyString
+  paytype: MyString
+  status: MyString
+  buyer_id: 1
+  buyertel: MyString
+  buyername: MyString
+  saler_id: 1
+  salertel: MyString
+
+two:
+  stock_id: 1
+  productname: MyString
+  productprice: 1
+  shippingfee: 1
+  shippingway: MyString
+  shippingcode: MyString
+  ordernum: MyString
+  paydate: 2013-07-16
+  paytime: MyString
+  payaccount: MyString
+  paytype: MyString
+  status: MyString
+  buyer_id: 1
+  buyertel: MyString
+  buyername: MyString
+  saler_id: 1
+  salertel: MyString
