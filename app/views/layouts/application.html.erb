@@ -7,7 +7,21 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
+<div>
+	<p><%= link_to "首頁", root_path %>｜
+	<% if current_user %>
+	<%= link_to "會員專區", useradmin_root_path %>
+	<% else %>
+	<%= link_to "會員登入", new_user_session_path %>	
+	<% end %>
+	</p>
+</div>
+<div>
+	產品搜尋
+</div>
+<div>
+	產品分類
+</div>
 <%= yield %>
 
 </body>

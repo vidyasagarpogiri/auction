@@ -1,0 +1,20 @@
+<%= link_to "新增商品", new_useradmin_product_path %>
+
+<% if @products.length > 0 %>
+
+<table>
+	<tr>
+		<th>Name</th>
+	</tr>
+	<% @products.each do |product| %>
+	<tr>
+		<td><%= link_to product.name, useradmin_product_path(product) %></td>
+	</tr>
+	<% end %>
+</table>
+
+<% else %>
+
+<p>沒有任何上架商品。</p>
+
+<% end %>

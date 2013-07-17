@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>useradmin</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div>
+	<p>賣東西：<%= link_to "商品管理", useradmin_products_path %>｜交易管理｜關於我｜黑名單</p>
+	<p>買東西：商品提問記錄｜交易記錄</p>
+	<p><%= link_to "回首頁", root_path %>｜<%= link_to "登出", destroy_user_session_path, :method => :delete %></p>
+</div>
+<%= yield %>
+
+</body>
+</html>
