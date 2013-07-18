@@ -1,0 +1,19 @@
+<% if @productasks.length > 0 %>
+<%= link_to "未回覆", useradmin_productasks_path(:reply => "false") %>｜<%= link_to "已回覆", useradmin_productasks_path(:reply => "true") %>
+<table>
+	<tr>
+		<th>Name</th>
+	</tr>
+	<% @productasks.each do |productask| %>
+	<tr>
+		<td><%= productask.name %></td>
+		<td><%= link_to productask.content, useradmin_productask_path(productask) %></td>
+	</tr>
+	<% end %>
+</table>
+
+<% else %>
+
+<p>沒有任何提問。</p>
+
+<% end %>

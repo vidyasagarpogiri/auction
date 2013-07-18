@@ -13,8 +13,24 @@
 
 <div>
 	<p>問與答歷史紀錄</p>
+	<% if @product.productasks.length > 0 %>
+	<% @product.productasks.each do |productask| %>
+	<p>提問：<br><%= simple_format(productask.content) %></p>
+
+		<% productask.productaskres.each do |productaskre| %>
+		<p>回覆：<br><%= simple_format(productaskre.content) %></p>
+		<% end %>
+
+	<% end %>
+	<% end %>
+
 	<% if current_user %>
-	<p>留言</p>
+	<%= form_for(@productask, :url => ask_product_path(params[:id])) do |f| %>
+	<p>提問</p>
+	<%= f.text_area :content, :rows => "5" %><br>
+	<%= f.submit "提問" %>
+	<% end %>
+	
 	<% else %>
 	<p>請登入會員留言</p>
 	<% end %>

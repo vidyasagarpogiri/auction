@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130717095037) do
+ActiveRecord::Schema.define(:version => 20130718070109) do
 
   create_table "blacklists", :force => true do |t|
     t.integer  "user_id"
@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(:version => 20130717095037) do
     t.text     "content"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "status"
   end
 
   create_table "productclasses", :force => true do |t|

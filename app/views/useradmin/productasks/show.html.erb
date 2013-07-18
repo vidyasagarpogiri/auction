@@ -1,0 +1,38 @@
+<p>
+  <b>Name:</b>
+  <%= @product.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @product.description %>
+</p>
+
+<p>
+  <b>Price:</b>
+  <%= @product.price %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @product.status %>
+</p>
+
+<div>
+	<p>問題：</p>
+	<%= simple_format(@productask.content) %>
+
+		<% @productask.productaskres.each do |productaskre| %>
+			<%= productaskre.created_at.strftime("%Y-%m-%d %H:%M") %><br>
+			<%= simple_format(productaskre.content) %></p>
+		<% end %>
+</div>
+<div>
+	<p>回覆</p>
+	<%= form_for(@productaskre, :url => reply_useradmin_productask_path(params[:id]) ) do |f| %>
+	<%= f.text_area :content, :rows => "5" %><br>
+	<%= f.submit "回覆" %>
+	<% end %>
+</div>
+
+<%= link_to "返回問與答列表", useradmin_productasks_path %>

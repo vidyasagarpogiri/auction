@@ -11,10 +11,32 @@ class ProductsController < ApplicationController
 
   def show
     @product = Product.where(:status => "上架", :id => params[:id]).first
+    @productask = Productask.new
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @product }
     end
+  end
+
+  def ask
+    @productask = Productask.new(params[:productask])
+    @productask.product_id = params[:id]
+    @productask.user_id = current_user.id
+
+    if(@productask.save)
+      respond_to do |format|
+        format.html { redirect_to product_path(params[:id]), notice: 'Ask was successfully created.' }
+        format.json { render json: @productask }
+      end
+    else
+      @product = Product.where(:status => "上架", :id => params[:id]).first
+      respond_to do |format|
+        format.html { render "show" }
+        format.json { render json: @productask }
+      end
+    end
+    
   end
 
 end

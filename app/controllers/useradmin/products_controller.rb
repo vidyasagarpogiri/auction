@@ -4,7 +4,7 @@ class Useradmin::ProductsController < ApplicationController
   layout "useradmin"
   
   def index
-    @products = Product.all
+    @products = current_user.products.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +13,7 @@ class Useradmin::ProductsController < ApplicationController
   end
 
   def show
-    @product = Product.find(params[:id])
+    @product = current_user.products.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb

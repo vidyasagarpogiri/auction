@@ -10,6 +10,7 @@ class UsersController < ApplicationController
   end
 
   def products
+    @products = current_user.products.where(:status => "上架").all
     respond_to do |format|
       format.html 
     end

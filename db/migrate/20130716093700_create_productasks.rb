@@ -4,6 +4,7 @@ class CreateProductasks < ActiveRecord::Migration
       t.integer :product_id
       t.integer :user_id
       t.text :content
+      t.string :status
 
       t.timestamps
     end

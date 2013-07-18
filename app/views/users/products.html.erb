@@ -2,3 +2,23 @@
 <%= link_to "商場", products_user_path(params[:id]) %>
 <%= link_to "交易評價", orders_user_path(params[:id]) %>
 <p>商家賣場</p>
+
+<% if @products.length > 0 %>
+<div>過濾：商品名稱/地區/價格</div>
+<div>排序：金額/上架時間</div>
+<table>
+	<tr>
+		<th>Name</th>
+	</tr>
+	<% @products.each do |product| %>
+	<tr>
+		<td><%= link_to product.name, product_path(product) %></td>
+	</tr>
+	<% end %>
+</table>
+
+<% else %>
+
+<p>沒有任何上架商品。</p>
+
+<% end %>

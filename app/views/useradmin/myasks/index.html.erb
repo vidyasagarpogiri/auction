@@ -1,0 +1,19 @@
+<% if @myasks.length > 0 %>
+
+<table>
+	<tr>
+		<th>Name</th>
+	</tr>
+	<% @myasks.each do |myask| %>
+	<tr>
+		<td><%= myask.name %></td>
+		<td><%= link_to myask.content, "#" %></td>
+	</tr>
+	<% end %>
+</table>
+
+<% else %>
+
+<p>沒有任何提問。</p>
+
+<% end %>
