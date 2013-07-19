@@ -15,7 +15,14 @@ Auction::Application.routes.draw do
   end
 
   namespace :useradmin do
-    resources :products
+    resources :products do
+      resources :stocks, :only => [:index, :create, :destroy] do
+        collection do
+          match "updateStocks", :via => :post
+        end
+      end
+    end
+    
     resources :productasks, :only => [:index, :show] do
       member do
         match "reply", :via => :post

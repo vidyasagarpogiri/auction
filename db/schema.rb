@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130718070109) do
+ActiveRecord::Schema.define(:version => 20130718103347) do
 
   create_table "blacklists", :force => true do |t|
     t.integer  "user_id"
@@ -104,6 +104,14 @@ ActiveRecord::Schema.define(:version => 20130718070109) do
     t.integer  "user_id"
     t.string   "status"
     t.text     "reason"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "stocks", :force => true do |t|
+    t.integer  "product_id"
+    t.string   "typename"
+    t.integer  "amount"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

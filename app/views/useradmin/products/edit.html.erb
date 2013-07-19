@@ -1,8 +1,7 @@
-<h1>Editing product</h1>
+<h1>編輯商品</h1>
 
 <%= form_for(@product, :url => useradmin_product_path(@product)) do |f| %>
 <%= render :partial => 'form', :locals => { :f => f} %>
 <% end %>
 
-<%= link_to 'Show', useradmin_product_path(@product) %> |
-<%= link_to 'Back', useradmin_products_path %>
+<%= link_to "取消編輯", useradmin_product_path(@product) %>

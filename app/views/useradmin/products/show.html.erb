@@ -1,25 +1,24 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Name:</b>
+  <b>商品名稱:</b>
   <%= @product.name %>
 </p>
 
 <p>
-  <b>Description:</b>
-  <%= @product.description %>
+  <b>描述:</b><br>
+  <%= simple_format(@product.description) %>
 </p>
 
 <p>
-  <b>Price:</b>
+  <b>售價:</b>
   <%= @product.price %>
 </p>
 
 <p>
-  <b>Status:</b>
+  <b>狀態:</b>
   <%= @product.status %>
 </p>
 
-
-<%= link_to 'Edit', edit_useradmin_product_path(@product) %> |
-<%= link_to 'Back', useradmin_products_path %>
+<%= link_to "編輯庫存", useradmin_product_stocks_path(@product) %><br>
+<%= link_to "編輯商品", edit_useradmin_product_path(@product) %> | <%= link_to "返回商品列表", useradmin_products_path %>

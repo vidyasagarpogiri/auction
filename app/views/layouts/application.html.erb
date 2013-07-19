@@ -10,7 +10,7 @@
 <div>
 	<p><%= link_to "首頁", root_path %>｜
 	<% if current_user %>
-	<%= link_to "會員專區", useradmin_root_path %>
+	<%= link_to "會員專區", useradmin_root_path %>｜<%= link_to "登出", destroy_user_session_path, :method => :delete %>
 	<% else %>
 	<%= link_to "會員登入", new_user_session_path %>	
 	<% end %>
