@@ -1,0 +1,22 @@
+<p>訂單日期：<%= @order.created_at.strftime("%Y-%m-%d %H:%M") %></p>
+<p>訂單編號：<%= @order.ordernum %></p>
+<p>訂單狀態：<%= @order.status %></p>
+<p>賣家：<%= @order.saler_id %></p>
+<p>電話：<%= @order.salertel %></p>
+
+<p><%= @order.productname %></p>
+<p>金額：<%= @order.productprice %></p>
+<p>數量：<%= @order.amount %></p>
+
+<hr>
+
+<% if(@order.orderasks.length > 0) %>
+	<% @order.orderasks.each do |orderask| %>
+	<p><%= orderask.created_at.strftime("%Y-%m-%d %H:%M") %> <%= orderask.user_id %>: <%= orderask.content %></p>
+	<% end %>
+<% end %>
+
+<%= form_for(@orderask, :url => createask_useradmin_buyrecord_path(@order)) do |f| %>
+<%= f.text_area :content, :rows => "5" %><br>
+<%= f.submit "提問" %>
+<% end %>

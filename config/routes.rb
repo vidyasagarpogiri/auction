@@ -38,8 +38,20 @@ Auction::Application.routes.draw do
     end
     resources :myasks, :only => [:index]
 
-    resources :orders, :only => [:index, :show]
-    resources :buyrecords, :only => [:index, :show]
+    resources :orders, :only => [:index, :show] do
+      member do
+        match "createask", :via => :post
+        get "ordervalues"
+        match "createvalue", :via => :post
+      end
+    end
+    resources :buyrecords, :only => [:index, :show] do
+      member do
+        match "createask", :via => :post
+        get "ordervalues"
+        match "createvalue", :via => :post
+      end
+    end
 
     root :to => "products#index"
   end
