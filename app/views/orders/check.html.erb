@@ -1,0 +1,13 @@
+<p>確定購買？</p>
+
+<p>商品名稱：<%= @product.name %>
+	<% if @product.typename != "default" %>
+	<span>(<%= @product.typename %>)</span>
+	<% end %>
+</p>
+<p>訂購數量：<%= params[:order][:amount] %></p>
+
+<%= form_for(@order, :url => new_orders_path) do |f| %>
+<%= f.text_field :stock_id, :type => "hidden" %><%= f.text_field :amount, :type => "hidden" %>
+<%= f.submit "下一步" %>
+<% end %>

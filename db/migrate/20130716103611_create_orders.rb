@@ -3,7 +3,9 @@ class CreateOrders < ActiveRecord::Migration
     create_table :orders do |t|
       t.integer :stock_id
       t.string :productname
+      t.string :producttype
       t.integer :productprice
+      t.integer :amount
       t.integer :shippingfee
       t.string :shippingway
       t.string :shippingcode

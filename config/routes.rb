@@ -14,6 +14,14 @@ Auction::Application.routes.draw do
     end
   end
 
+  resources :orders, :only => [:create] do
+    collection do
+      match "/new", :via => :post
+      match "check", :via => :post
+      get "finish"
+    end
+  end
+
   namespace :useradmin do
     resources :products do
       resources :stocks, :only => [:index, :create, :destroy] do
@@ -29,6 +37,9 @@ Auction::Application.routes.draw do
       end
     end
     resources :myasks, :only => [:index]
+
+    resources :orders, :only => [:index, :show]
+    resources :buyrecords, :only => [:index, :show]
 
     root :to => "products#index"
   end

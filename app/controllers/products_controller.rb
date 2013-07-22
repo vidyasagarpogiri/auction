@@ -12,6 +12,7 @@ class ProductsController < ApplicationController
   def show
     @product = Product.where(:status => "上架", :id => params[:id]).first
     @productask = Productask.new
+    @order = Order.new
 
     if(@product)
       @product["hasType"] = (@product.stocks.first.typename != "default")
