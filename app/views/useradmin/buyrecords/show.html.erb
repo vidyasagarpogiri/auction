@@ -1,6 +1,9 @@
 <p>訂單日期：<%= @order.created_at.strftime("%Y-%m-%d %H:%M") %></p>
 <p>訂單編號：<%= @order.ordernum %></p>
-<p>訂單狀態：<%= @order.status %></p>
+<p>訂單狀態：<%= @order.status %> <%= link_to "給予評價", ordervalues_useradmin_buyrecord_path(@order) %></p>
+<% if(@order.ordervalues.length > 0) %>
+<p>評價：<%= @order.ordervalues.last.value %></p>
+<% end %>
 <p>賣家：<%= @order.saler_id %></p>
 <p>電話：<%= @order.salertel %></p>
 
@@ -11,6 +14,7 @@
 <hr>
 
 <% if(@order.orderasks.length > 0) %>
+	<h4>歷史訊息</h4>
 	<% @order.orderasks.each do |orderask| %>
 	<p><%= orderask.created_at.strftime("%Y-%m-%d %H:%M") %> <%= orderask.user_id %>: <%= orderask.content %></p>
 	<% end %>

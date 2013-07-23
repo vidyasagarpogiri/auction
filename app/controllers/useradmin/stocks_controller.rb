@@ -2,6 +2,7 @@
 class Useradmin::StocksController < ApplicationController
   before_filter :authenticate_user!
   layout "useradmin"
+  
   def index
     @product = Product.find(params[:product_id])
     @stocks = @product.stocks

@@ -53,6 +53,13 @@ Auction::Application.routes.draw do
       end
     end
 
+    resources :users, :only => [] do
+      collection do
+        get "aboutme"
+        resources :blacklists, :only => [:index, :create, :destroy]
+      end
+    end
+
     root :to => "products#index"
   end
 

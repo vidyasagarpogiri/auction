@@ -28,4 +28,21 @@ class Useradmin::BuyrecordsController < ApplicationController
       format.json { render json: @orderask }
     end 
   end
+
+  def ordervalues
+    @order = Order.where("buyer_id = ? and id = ?", current_user.id, params[:id]).first
+    @ordervalue = Ordervalue.new
+  end
+
+  def createvalue
+    @ordervalue = Ordervalue.new(params[:ordervalue])
+    @ordervalue.user_id = current_user.id
+    @ordervalue.order_id = params[:id]
+    @ordervalue.save
+
+    respond_to do |format|
+      format.html { redirect_to ordervalues_useradmin_buyrecord_path(params[:id]) }
+      format.json { render json: @ordervalue }
+    end 
+  end
 end

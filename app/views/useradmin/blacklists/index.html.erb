@@ -1,0 +1,26 @@
+<h4>黑名單</h4>
+
+<%= form_for(@blacklist, :url => useradmin_blacklists_path) do |f| %>
+<%= f.text_field :block_id %>
+<%= f.submit "增加至黑名單" %>
+<% end %>
+
+<% if @blacklists.length > 0 %>
+
+<table>
+	<tr>
+		<th>使用者名稱</th><th>從黑名單移除</th>
+	</tr>
+	<% @blacklists.each do |blacklist| %>
+	<tr>
+		<td><%= blacklist.block_id %></td>
+		<td><%= link_to "移除", useradmin_blacklist_path(blacklist), :method => :delete, :data => {:confirm => "確定移除？"} %></td>
+	</tr>
+	<% end %>
+</table>
+
+<% else %>
+
+<p>尚未建立黑名單。</p>
+
+<% end %>
