@@ -1,0 +1,39 @@
+<h4>編輯關於我</h4>
+
+<%= form_for(current_user, :url => aboutme_update_useradmin_users_path) do |f| %>
+
+<div class="field">
+	<%= f.text_field :aboutme, :style => "display:none;" %>
+</div>
+<% end %>
+
+<div id="editorPanel"></div>
+
+<hr />
+
+<!--show the content of article -->
+<section id="articleContent"></section>
+
+<hr />
+
+<div class="action" id="submit">
+  <a href="#">儲存</a>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	editor.init({articleModel: "user", articleAttr: "aboutme"});
+
+	$("#submit").click(function(e){
+		e.preventDefault();
+
+		if(!editor.isPostNotSent()){
+			$("#edit_user_<%= current_user.id %>").submit();
+		}
+		else{
+			editor.alert("段落編輯尚未完成。", "error");
+		}
+		
+	});
+});
+</script>

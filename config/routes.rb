@@ -56,6 +56,9 @@ Auction::Application.routes.draw do
     resources :users, :only => [] do
       collection do
         get "aboutme"
+        get "aboutme/edit" => "users#aboutme_edit"
+        match "aboutme/update" => "users#aboutme_update", :via => :put
+
         resources :blacklists, :only => [:index, :create, :destroy]
       end
     end

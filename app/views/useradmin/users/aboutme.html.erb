@@ -1,1 +1,11 @@
 <h4>關於我</h4>
+<input id="article_content" style="display:none;" type="text" value="<%= current_user.aboutme %>">
+<div id="articleContent"></div>
+<%= link_to "編輯關於我", aboutme_edit_useradmin_users_path %>
+
+<script>
+$(document).ready(function() {
+  editor.output();
+});
+
+</script>

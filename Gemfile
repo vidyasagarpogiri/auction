@@ -27,9 +27,12 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 
 gem 'devise'
 
+#image upload
+gem "remotipart"
 gem "mini_magick"
 gem 'carrierwave'
 
