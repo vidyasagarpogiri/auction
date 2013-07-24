@@ -1,0 +1,28 @@
+<p>訂單日期：<%= @deal.created_at.strftime("%Y-%m-%d %H:%M") %></p>
+<p>訂單編號：<%= @deal.dealnum %></p>
+<p>訂單狀態：<%= @deal.status %></p>
+<% if(@deal.dealvalues.length > 0) %>
+<p>評價：<%= @deal.dealvalues.last.value %></p>
+<% end %>
+<p>賣家：<%= @deal.seller_id %></p>
+<p>電話：<%= @deal.sellertel %></p>
+
+<p><%= @deal.productname %></p>
+<p>數量：<%= @deal.amount %></p>
+
+<hr>
+
+<% if(@deal.dealvalues.length > 0) %>
+	<h4>評價紀錄</h4>
+	<% @deal.dealvalues.each do |dealvalue| %>
+	<p><%= dealvalue.created_at.strftime("%Y-%m-%d %H:%M") %> <%= dealvalue.user_id %>: <%= dealvalue.value %> <%= dealvalue.comment %></p>
+	<% end %>
+<% end %>
+
+<%= form_for(@dealvalue, :url => createvalue_useradmin_buyrecord_path(@deal)) do |f| %>
+評價：<%= f.radio_button :value, "優良" %>優良 <%= f.radio_button :value, "普通" %>普通 <%= f.radio_button :value, "差" %>差<br>
+<%= f.text_area :comment, :rows => "5" %><br>
+<%= f.submit "評價" %>
+<% end %>
+
+<p><%= link_to "返回交易", useradmin_buyrecord_path(@deal) %></p>

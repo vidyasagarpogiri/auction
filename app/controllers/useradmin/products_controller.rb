@@ -40,7 +40,7 @@ class Useradmin::ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.save
-        format.html { redirect_to  useradmin_product_path(@product), notice: 'Product was successfully created.' }
+        format.html { redirect_to  useradmin_product_path(@product), notice: 'product was successfully created.' }
         format.json { render json: @product, status: :created, location: @product }
       else
         format.html { render action: "new" }
@@ -54,7 +54,7 @@ class Useradmin::ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.update_attributes(params[:product])
-        format.html { redirect_to useradmin_product_path(@product), notice: 'Product was successfully updated.' }
+        format.html { redirect_to useradmin_product_path(@product), notice: 'product was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

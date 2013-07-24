@@ -10,11 +10,11 @@ Auction::Application.routes.draw do
   resources :users, :only => [:show] do
     member do
       get "products"
-      get "orders"
+      get "deals"
     end
   end
 
-  resources :orders, :only => [:create] do
+  resources :deals, :only => [:create] do
     collection do
       match "/new", :via => :post
       match "check", :via => :post
@@ -38,17 +38,17 @@ Auction::Application.routes.draw do
     end
     resources :myasks, :only => [:index]
 
-    resources :orders, :only => [:index, :show] do
+    resources :deals, :only => [:index, :show] do
       member do
         match "createask", :via => :post
-        get "ordervalues"
+        get "dealvalues"
         match "createvalue", :via => :post
       end
     end
     resources :buyrecords, :only => [:index, :show] do
       member do
         match "createask", :via => :post
-        get "ordervalues"
+        get "dealvalues"
         match "createvalue", :via => :post
       end
     end

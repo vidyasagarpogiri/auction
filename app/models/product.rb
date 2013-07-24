@@ -4,4 +4,5 @@ class Product < ActiveRecord::Base
   belongs_to :user
   has_many :stocks
   has_many :productasks
+  has_many :productimgs
 end

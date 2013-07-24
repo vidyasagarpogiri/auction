@@ -1,0 +1,20 @@
+<% if @deals.length > 0 %>
+
+<table>
+	<tr>
+		<th>日期</th><th>訂單編號</th><th>狀態</th>
+	</tr>
+	<% @deals.each do |deal| %>
+	<tr>
+		<td><%= deal.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+		<td><%= link_to deal.dealnum, useradmin_deal_path(deal) %></td>
+		<td><%= deal.status %></td>
+	</tr>
+	<% end %>
+</table>
+
+<% else %>
+
+<p>沒有任何訂單記錄。</p>
+
+<% end %>

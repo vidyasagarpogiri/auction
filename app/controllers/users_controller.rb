@@ -9,14 +9,14 @@ class UsersController < ApplicationController
     end
   end
 
-  def products
-    @products = Product.where(:status => "上架", :user_id => params[:id]).all
+  def prodcuts
+    @prodcuts = Prodcut.where(:status => "上架", :user_id => params[:id]).all
     respond_to do |format|
       format.html 
     end
   end
 
-  def orders
+  def deals
     respond_to do |format|
       format.html 
     end

@@ -11,11 +11,50 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130722100407) do
+ActiveRecord::Schema.define(:version => 20130724080324) do
 
   create_table "blacklists", :force => true do |t|
     t.integer  "user_id"
     t.integer  "block_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "dealasks", :force => true do |t|
+    t.integer  "deal_id"
+    t.integer  "user_id"
+    t.text     "content"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "deals", :force => true do |t|
+    t.integer  "case_id"
+    t.string   "serialnum"
+    t.string   "casename"
+    t.integer  "amount"
+    t.integer  "shippingfee"
+    t.string   "shippingway"
+    t.string   "shippingcode"
+    t.date     "paydate"
+    t.string   "paytime"
+    t.string   "payaccount"
+    t.string   "paytype"
+    t.string   "status"
+    t.integer  "buyer_id"
+    t.string   "buyertel"
+    t.string   "buyername"
+    t.integer  "seller_id"
+    t.string   "sellertel"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  create_table "dealvalues", :force => true do |t|
+    t.integer  "deal_id"
+    t.integer  "user_id"
+    t.string   "value"
+    t.text     "comment"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

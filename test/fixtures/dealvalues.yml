@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  deal_id: 1
+  user_id: 1
+  value: MyString
+  comment: MyText
+
+two:
+  deal_id: 1
+  user_id: 1
+  value: MyString
+  comment: MyText

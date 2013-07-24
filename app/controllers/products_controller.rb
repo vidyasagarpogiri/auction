@@ -12,7 +12,7 @@ class ProductsController < ApplicationController
   def show
     @product = Product.where(:status => "上架", :id => params[:id]).first
     @productask = Productask.new
-    @order = Order.new
+    @deal = Deal.new
 
     if(@product)
       @product["hasType"] = (@product.stocks.first.typename != "default")
@@ -36,7 +36,7 @@ class ProductsController < ApplicationController
         format.json { render json: @productask }
       end
     else
-      @product = Product.where(:status => "上架", :id => params[:id]).first
+      @product = product.where(:status => "上架", :id => params[:id]).first
       respond_to do |format|
         format.html { render "show" }
         format.json { render json: @productask }

@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  serialnum: MyString
+  name: MyString
+  amount: 1
+  description: MyText
+  status: MyString
+  cover: MyString
+  region: MyString
+
+two:
+  serialnum: MyString
+  name: MyString
+  amount: 1
+  description: MyText
+  status: MyString
+  cover: MyString
+  region: MyString

@@ -30,7 +30,7 @@ class Useradmin::ProductasksController < ApplicationController
 
   def show
   	@productask = current_user.productasks.find(params[:id])
-  	@productaskre = Productaskre.new
+  	@productaskre = productaskre.new
 
   	if @productask
   		@product = Product.find(@productask.product_id)

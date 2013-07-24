@@ -1,11 +1,11 @@
 <p>訂單日期：<%= @deal.created_at.strftime("%Y-%m-%d %H:%M") %></p>
 <p>訂單編號：<%= @deal.dealnum %></p>
-<p>訂單狀態：<%= @deal.status %> <%= link_to "給予評價", dealvalues_useradmin_buyrecord_path(@deal) %></p>
+<p>訂單狀態：<%= @deal.status %> <%= link_to "給予評價", dealvalues_useradmin_deal_path(@deal) %></p>
 <% if(@deal.dealvalues.length > 0) %>
 <p>評價：<%= @deal.dealvalues.last.value %></p>
 <% end %>
-<p>賣家：<%= @deal.seller_id %></p>
-<p>電話：<%= @deal.sellertel %></p>
+<p>購買人：<%= @deal.buyername %></p>
+<p>電話：<%= @deal.buyertel %></p>
 
 <p><%= @deal.productname %></p>
 <p>數量：<%= @deal.amount %></p>
@@ -19,7 +19,7 @@
 	<% end %>
 <% end %>
 
-<%= form_for(@dealask, :url => createask_useradmin_buyrecord_path(@deal)) do |f| %>
+<%= form_for(@dealask, :url => createask_useradmin_deal_path(@deal)) do |f| %>
 <%= f.text_area :content, :rows => "5" %><br>
 <%= f.submit "提問" %>
 <% end %>

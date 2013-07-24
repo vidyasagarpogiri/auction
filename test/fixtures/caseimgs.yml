@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  case_id: 1
+  path: MyString
+
+two:
+  case_id: 1
+  path: MyString

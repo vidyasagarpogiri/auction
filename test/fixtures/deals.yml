@@ -1,0 +1,39 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  case_id: 1
+  serialnum: MyString
+  casename: MyString
+  amount: 1
+  shippingfee: 1
+  shippingway: MyString
+  shippingcode: MyString
+  paydate: 2013-07-24
+  paytime: MyString
+  payaccount: MyString
+  paytype: MyString
+  status: MyString
+  buyer_id: 1
+  buyertel: MyString
+  buyername: MyString
+  seller_id: 1
+  sellertel: MyString
+
+two:
+  case_id: 1
+  serialnum: MyString
+  casename: MyString
+  amount: 1
+  shippingfee: 1
+  shippingway: MyString
+  shippingcode: MyString
+  paydate: 2013-07-24
+  paytime: MyString
+  payaccount: MyString
+  paytype: MyString
+  status: MyString
+  buyer_id: 1
+  buyertel: MyString
+  buyername: MyString
+  seller_id: 1
+  sellertel: MyString

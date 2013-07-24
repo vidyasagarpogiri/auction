@@ -1,9 +1,9 @@
 <%= link_to "賣家資訊", user_path(params[:id]) %>
 <%= link_to "商場", products_user_path(params[:id]) %>
-<%= link_to "交易評價", orders_user_path(params[:id]) %>
+<%= link_to "交易評價", deals_user_path(params[:id]) %>
 <p>商家賣場</p>
 
-<% if @products.length > 0 %>
+<% if @products && @products.length > 0 %>
 <div>過濾：商品名稱/地區/價格</div>
 <div>排序：金額/上架時間</div>
 <table>
