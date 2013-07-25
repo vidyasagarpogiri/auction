@@ -5,22 +5,22 @@ class Useradmin::ProductasksController < ApplicationController
 
   def index
   	@productasks = current_user.productasks.select("productasks.*, products.name").all
-  	@replyedasks = Array.new
-  	@unreplyedasks = Array.new
+  	# @replyedasks = Array.new
+  	# @unreplyedasks = Array.new
 
-  	@productasks.each do |productask|
-  		if(productask.productaskres.length > 0)
-  			@replyedasks.push(productask)
-  		else
-  			@unreplyedasks.push(productask)
-  		end
-  	end
+  	# @productasks.each do |productask|
+  	# 	if(productask.productaskres.length > 0)
+  	# 		@replyedasks.push(productask)
+  	# 	else
+  	# 		@unreplyedasks.push(productask)
+  	# 	end
+  	# end
 
-  	if(params[:reply] == "true")
-  		@productasks = @replyedasks
-  	else
-  		@productasks = @unreplyedasks
-  	end
+  	# if(params[:reply] == "true")
+  	# 	@productasks = @replyedasks
+  	# else
+  	# 	@productasks = @unreplyedasks
+  	# end
 
   	respond_to do |format|
       format.html # index.html.erb
@@ -29,8 +29,13 @@ class Useradmin::ProductasksController < ApplicationController
   end
 
   def show
-  	@productask = current_user.productasks.find(params[:id])
-  	@productaskre = productaskre.new
+    begin
+      @productask = current_user.productasks.find(params[:id])
+    rescue ActiveRecord::RecordNotFound => e
+      @productask = nil
+    end
+  	
+  	@productaskre = Productaskre.new
 
   	if @productask
   		@product = Product.find(@productask.product_id)

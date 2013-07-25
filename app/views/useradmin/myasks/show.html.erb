@@ -1,4 +1,3 @@
-<% if @productask %>
 <p>
   <b>Name:</b>
   <%= @product.name %>
@@ -28,16 +27,5 @@
 			<%= simple_format(productaskre.content) %></p>
 		<% end %>
 </div>
-<div>
-	<p>回覆</p>
-	<%= form_for(@productaskre, :url => reply_useradmin_productask_path(params[:id]) ) do |f| %>
-	<%= f.text_area :content, :rows => "5" %><br>
-	<%= f.submit "回覆" %>
-	<% end %>
-</div>
 
-<% else %>
-<p>找不到該筆記錄。</p>
-<% end %>
-
-<%= link_to "返回問與答列表", useradmin_productasks_path %>
+<%= link_to "返回問與答列表", useradmin_myasks_path %>

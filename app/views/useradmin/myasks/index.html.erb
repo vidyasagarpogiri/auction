@@ -7,7 +7,7 @@
 	<% @myasks.each do |myask| %>
 	<tr>
 		<td><%= myask.name %></td>
-		<td><%= link_to myask.content, "#" %></td>
+		<td><%= link_to myask.content, useradmin_myask_path(myask) %></td>
 	</tr>
 	<% end %>
 </table>

@@ -30,7 +30,7 @@ Auction::Application.routes.draw do
         match "reply", :via => :post
       end
     end
-    resources :myasks, :only => [:index]
+    resources :myasks, :only => [:index, :show]
 
     resources :deals, :only => [:index, :show] do
       member do
