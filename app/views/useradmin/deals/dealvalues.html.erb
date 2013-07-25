@@ -1,9 +1,7 @@
 <p>訂單日期：<%= @deal.created_at.strftime("%Y-%m-%d %H:%M") %></p>
-<p>訂單編號：<%= @deal.dealnum %></p>
+<p>訂單編號：<%= @deal.serialnum %></p>
 <p>訂單狀態：<%= @deal.status %></p>
-<% if(@deal.dealvalues.length > 0) %>
-<p>評價：<%= @deal.dealvalues.last.value %></p>
-<% end %>
+<p>評價：<%= @value || "沒有評價。" %></p>
 <p>購買人：<%= @deal.buyername %></p>
 <p>電話：<%= @deal.buyertel %></p>
 

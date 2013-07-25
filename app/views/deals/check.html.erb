@@ -1,13 +1,14 @@
 <p>確定購買？</p>
 
 <p>商品名稱：<%= @product.name %>
-	<% if @product.typename != "default" %>
-	<span>(<%= @product.typename %>)</span>
-	<% end %>
 </p>
 <p>訂購數量：<%= params[:deal][:amount] %></p>
 
-<%= form_for(@deal, :url => new_deals_path) do |f| %>
-<%= f.text_field :stock_id, :type => "hidden" %><%= f.text_field :amount, :type => "hidden" %>
+<form action="<%= product_path(@deal.product_id) %>" style="display:inline;" >
+	<input type="submit" value="取消" />
+</form>
+
+<%= form_for(@deal, :url => new_deals_path, :html => { :style => "display:inline;" }) do |f| %>
+<%= f.hidden_field :product_id %><%= f.hidden_field :amount %>
 <%= f.submit "下一步" %>
 <% end %>

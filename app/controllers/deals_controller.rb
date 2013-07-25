@@ -1,5 +1,6 @@
 #encoding: utf-8
 class DealsController < ApplicationController
+  before_filter :authenticate_user!
   before_filter :find_product, :except => [:finish]
 
   def check
@@ -31,6 +32,10 @@ class DealsController < ApplicationController
 
     respond_to do |format|
       if(@deal.save)
+        if(@product.amount)
+          @product.amount = @product.amount - @deal.amount
+          @product.save
+        end
         format.html { redirect_to  finish_deals_path }
         format.json { render json: @deal }
       else
@@ -41,8 +46,7 @@ class DealsController < ApplicationController
   end
 
   def find_product
-    @product = Product.find(params[:deal][:product_id])
-    
+    @product = Product.find(params[:deal][:product_id])    
   end
 
 end

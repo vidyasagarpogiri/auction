@@ -14,7 +14,8 @@ class Useradmin::DealsController < ApplicationController
 
   def show
   	@deal = Deal.where("seller_id = ? and id = ?", current_user.id, params[:id]).first
-  	@dealask = Dealask.new  	
+  	@value = @deal.dealvalues.select("dealvalues.*").where("dealvalues.user_id = ?", @deal.buyer_id).last.value
+    @dealask = Dealask.new  	
   end
 
   def createask
@@ -31,7 +32,8 @@ class Useradmin::DealsController < ApplicationController
 
   def dealvalues
     @deal = Deal.where("seller_id = ? and id = ?", current_user.id, params[:id]).first
-    @dealvalue = dealvalue.new
+    @value = @deal.dealvalues.select("dealvalues.*").where("dealvalues.user_id = ?", @deal.buyer_id).last.value
+    @dealvalue = Dealvalue.new
   end
 
   def createvalue

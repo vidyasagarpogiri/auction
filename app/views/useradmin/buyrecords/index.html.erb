@@ -7,7 +7,7 @@
 	<% @buyrecords.each do |buyrecord| %>
 	<tr>
 		<td><%= buyrecord.created_at.strftime("%Y-%m-%d %H:%M") %></td>
-		<td><%= link_to buyrecord.ordernum, useradmin_buyrecord_path(buyrecord) %></td>
+		<td><%= link_to buyrecord.serialnum, useradmin_buyrecord_path(buyrecord) %></td>
 		<td><%= buyrecord.status %></td>
 	</tr>
 	<% end %>

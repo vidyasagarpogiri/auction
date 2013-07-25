@@ -16,9 +16,13 @@
 </p>
 
 <p>
+  <b>數量:</b>
+  <%= @product.amount %>
+</p>
+
+<p>
   <b>狀態:</b>
   <%= @product.status %>
 </p>
 
-<%= link_to "編輯庫存", useradmin_product_stocks_path(@product) %><br>
 <%= link_to "編輯商品", edit_useradmin_product_path(@product) %> | <%= link_to "返回商品列表", useradmin_products_path %>

@@ -5,30 +5,13 @@
 <p>
   價格：$ <%= @product.price %><br>
 
-  <%= form_for(@order, :url => check_orders_path) do |f| %>
-    <% if !@product.hasType && @product.hasStock %>
-    <input type="hidden" value="<%= @product.stocks.first.id %>" name="order[stock_id]">
-  	 <% if @product.stocks.first.amount && @product.stocks.first.amount >0 %>
-  		  <p>庫存 <%= @product.stocks.first.amount %></p>
-  	 <% end %>
-  	<% elsif !@product.hasStock %>
-  		<p>本商品目前無庫存。</p>
-  	<% end %>
+  <p>庫存 <%= @product.amount %></p>
+  <%= form_for(@deal, :url => check_deals_path) do |f| %>
 
-  	<% if @product.hasStock %>
-  		訂購數量：<br/>
-  		<% if @product.hasType %>
-  			<select id="productType" name="order[stock_id]">
-  				<% @product.stocks.each do |stock| %>
-  				<% if !stock.amount || stock.amount > 0 %>
-  				<option value="<%= stock.id %>"><%= stock.typename %><%= (": 庫存"+stock.amount.to_s+"個。") if stock.amount %></option>
-  				<% end %>
-  				<% end %>
-            </select><br>
-        <% end %>
-        <%= f.text_field :amount %>
-        <%= f.submit "購買" %>
-    <% end %>
+  訂購數量：<br/>
+  <%= f.hidden_field :product_id, :value => params[:id] %>
+  <%= f.text_field :amount %>
+  <%= f.submit "購買" %>
   <% end %>
 </p>
 

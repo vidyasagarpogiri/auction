@@ -2,3 +2,26 @@
 <%= link_to "商場", products_user_path(params[:id]) %>
 <%= link_to "交易評價", deals_user_path(params[:id]) %>
 <p>歷史交易評價</p>
+
+<% if @deals && @deals.length > 0 %>
+	<% @deals.each do |deal| %>
+	<div>
+		<p><%= deal.created_at.strftime("%Y-%m-%d %H:%M") %></p>
+		<p>商品名稱：<%= deal.productname %></p>
+		<p>數量：<%= deal.amount %></p>
+
+		<% @value = deal.dealvalues.select("dealvalues.*").where("dealvalues.user_id = ?", deal.buyer_id).last.value %>
+		<p>評價：<%= @value || "沒有評價。" %></p>
+
+		<% deal.dealvalues.each do |dealvalue| %>
+			<p><%= dealvalue.created_at.strftime("%Y-%m-%d %H:%M") %></p>
+			<p><%= dealvalue.user_id %>:<%= dealvalue.value %></p>
+			<p><%= simple_format(dealvalue.comment) %></p>
+		<% end %>
+	</div>
+	<% end %>
+<% else %>
+
+<p>沒有任何評價記錄。</p>
+
+<% end %>

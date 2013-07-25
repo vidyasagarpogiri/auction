@@ -1,9 +1,9 @@
 class CreateDeals < ActiveRecord::Migration
   def change
     create_table :deals do |t|
-      t.integer :case_id
+      t.integer :product_id
       t.string :serialnum
-      t.string :casename
+      t.string :productname
       t.integer :amount
       t.integer :shippingfee
       t.string :shippingway

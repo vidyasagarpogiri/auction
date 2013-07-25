@@ -7,7 +7,7 @@
 	<% @deals.each do |deal| %>
 	<tr>
 		<td><%= deal.created_at.strftime("%Y-%m-%d %H:%M") %></td>
-		<td><%= link_to deal.dealnum, useradmin_deal_path(deal) %></td>
+		<td><%= link_to deal.serialnum, useradmin_deal_path(deal) %></td>
 		<td><%= deal.status %></td>
 	</tr>
 	<% end %>

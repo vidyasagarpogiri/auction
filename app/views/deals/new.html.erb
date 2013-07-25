@@ -1,12 +1,9 @@
 <p>商品名稱：<%= @product.name %>
-	<% if @product.typename != "default" %>
-	<span>(<%= @product.typename %>)</span>
-	<% end %>
 </p>
 <p>訂購數量：<%= params[:deal][:amount] %></p>
 
 <%= form_for(@deal, :url => deals_path) do |f| %>
-<%= f.text_field :stock_id, :type => "hidden" %><%= f.text_field :amount, :type => "hidden" %>
+<%= f.hidden_field :product_id %><%= f.hidden_field :amount %>
 <p>取件人姓名：<%= f.text_field :buyername %></p>
 <p>取件人電話：<%= f.text_field :buyertel %></p>
 

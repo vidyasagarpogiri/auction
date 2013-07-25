@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130724080324) do
+ActiveRecord::Schema.define(:version => 20130724103039) do
 
   create_table "blacklists", :force => true do |t|
     t.integer  "user_id"
@@ -29,9 +29,9 @@ ActiveRecord::Schema.define(:version => 20130724080324) do
   end
 
   create_table "deals", :force => true do |t|
-    t.integer  "case_id"
+    t.integer  "product_id"
     t.string   "serialnum"
-    t.string   "casename"
+    t.string   "productname"
     t.integer  "amount"
     t.integer  "shippingfee"
     t.string   "shippingway"
@@ -140,6 +140,7 @@ ActiveRecord::Schema.define(:version => 20130724080324) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.integer  "user_id"
+    t.integer  "amount"
   end
 
   create_table "status_logs", :force => true do |t|

@@ -14,11 +14,6 @@ class ProductsController < ApplicationController
     @productask = Productask.new
     @deal = Deal.new
 
-    if(@product)
-      @product["hasType"] = (@product.stocks.first.typename != "default")
-      @product["hasStock"] = hasStocks?(@product)
-    end
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @product }
@@ -43,23 +38,6 @@ class ProductsController < ApplicationController
       end
     end
     
-  end
-
-  def hasStocks?(product)
-    @product = product
-    @product.stocks.each do |stock|
-      if stock.amount
-        if stock.amount > 0
-          return true
-        else
-          next
-        end
-      else
-        return true
-      end
-    end
-
-    return false    
   end
 
 end
