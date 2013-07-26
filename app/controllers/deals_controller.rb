@@ -2,13 +2,14 @@
 class DealsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :find_product, :except => [:finish]
+  before_filter :check_stock, :except => [:finish]
 
   def check
     if(params[:deal][:amount] && params[:deal][:amount].to_i > 0)
       @deal = Deal.new(params[:deal])
     else
       respond_to do |format|
-        flash[:alert] = "請輸入訂購數量"
+        flash[:alert] = "請輸入數量"
         format.html { redirect_to  :back }
       end
     end
@@ -47,6 +48,15 @@ class DealsController < ApplicationController
 
   def find_product
     @product = Product.find(params[:deal][:product_id])    
+  end
+
+  def check_stock
+    if(@product.amount && params[:deal][:amount].to_i > @product.amount)
+      respond_to do |format|
+        flash[:alert] = "數量不足。"
+        format.html { redirect_to product_path(@product.id) }
+      end
+    end    
   end
 
 end
