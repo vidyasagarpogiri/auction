@@ -10,7 +10,7 @@ class UsersController < ApplicationController
   end
 
   def products
-    @products = Product.where(:status => "上架", :user_id => params[:id]).all
+    @products = @user.products.all
     
     respond_to do |format|
       format.html 
@@ -18,14 +18,14 @@ class UsersController < ApplicationController
   end
 
   def deals
-    @deals = Deal.where("seller_id = ?", params[:id]).all
+    @deals = Deal.where("seller_id = ?", @user.id).all
     respond_to do |format|
       format.html 
     end
   end
 
   def find_user
-    @user = User.find(params[:id])
+    @user = User.where("id = ? OR name = ?", params[:id], params[:id]).first
   end
 
 end

@@ -10,7 +10,7 @@ class ProductsController < ApplicationController
   end
 
   def show
-    @product = Product.where(:status => "上架", :id => params[:id]).first
+    @product = Product.where(:status => "上架", :id => params[:id]).select("products.*, users.name as username").joins("left join users on users.id = products.user_id").first
     @productask = Productask.new
     @deal = Deal.new
 

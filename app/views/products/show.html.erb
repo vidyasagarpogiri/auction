@@ -1,6 +1,6 @@
 <p><%= @product.name %></p>
 <p>
-	賣家資訊：<%= link_to @product.user_id, user_path(@product.user_id) %>
+	賣家資訊：<%= link_to @product.username, user_path(@product.username) %>
 </p>
 <p>
   價格：$ <%= @product.price %><br>
