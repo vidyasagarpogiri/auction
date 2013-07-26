@@ -10,8 +10,8 @@
 		<p>商品名稱：<%= deal.productname %></p>
 		<p>數量：<%= deal.amount %></p>
 
-		<% @value = deal.dealvalues.select("dealvalues.*").where("dealvalues.user_id = ?", deal.buyer_id).last.value %>
-		<p>評價：<%= @value || "沒有評價。" %></p>
+		<% @deal_value = deal.dealvalues.select("dealvalues.*").where("dealvalues.user_id = ?", deal.buyer_id).last %>
+		<p>評價：<%= @deal_value ? @deal_value.value : "沒有評價。" %></p>
 
 		<% deal.dealvalues.each do |dealvalue| %>
 			<p><%= dealvalue.created_at.strftime("%Y-%m-%d %H:%M") %></p>
@@ -19,6 +19,7 @@
 			<p><%= simple_format(dealvalue.comment) %></p>
 		<% end %>
 	</div>
+	<hr>
 	<% end %>
 <% else %>
 

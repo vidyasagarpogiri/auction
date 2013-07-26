@@ -26,7 +26,7 @@ class DealsController < ApplicationController
     
     #訂單編號格式：訂單日期＋流水號(當日第幾筆) (YYYYMMDD0001)
     @deal.serialnum = Date.today.strftime("%Y%m%d").to_s + ("%04d" % (Deal.where("created_at >= ?", Time.zone.now.beginning_of_day).count + 1))
-    @deal.status = "新訂單"
+    @deal.status = "new"
     @deal.buyer_id = current_user.id
     @deal.seller_id = @product.user_id
     @deal.amount = params[:deal][:amount]

@@ -16,7 +16,7 @@
 <body>
 <div>
 	<p><%= link_to "回首頁", root_path %>｜<%= link_to "登出", destroy_user_session_path, :method => :delete %></p>
-	<p>賣東西：<%= link_to "商品管理", useradmin_products_path %>｜<%= link_to "商品問與答", useradmin_productasks_path %>｜<%= link_to "交易管理", useradmin_deals_path %>｜<%= link_to "關於我", aboutme_useradmin_users_path %>｜<%= link_to "黑名單", useradmin_blacklists_path %></p>
+	<p>賣東西：<%= link_to "商品管理", useradmin_products_path %>｜<%= link_to "商品問與答", useradmin_productasks_path %>｜<%= link_to "交易管理", useradmin_deals_path %>｜<%= link_to "關於我", aboutme_useradmin_users_path %>｜<%= link_to "修改個人資料", edit_user_registration_path %>｜<%= link_to "黑名單", useradmin_blacklists_path %></p>
 	<p>買東西：<%= link_to "商品提問記錄", useradmin_myasks_path %>｜<%= link_to "交易記錄", useradmin_buyrecords_path %></p>
 </div>
 <%= yield %>

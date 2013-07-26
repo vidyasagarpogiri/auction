@@ -1,12 +1,20 @@
 #encoding: UTF-8
 class Useradmin::BuyrecordsController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :count_buyrecords, :only => [:index, :show]
   layout "useradmin"
 
   def index
-  	@buyrecords = Deal.where("buyer_id = ?", current_user.id).all
+  	case params[:type]
+    when "new", "check", "processing", "deliver", "cancel"
+      #do nothing
+    else
+      params[:type] = "new"
+    end
 
-  	respond_to do |format|
+    @buyrecords = Deal.where("buyer_id = ? AND status = ?", current_user.id, params[:type]).order("created_at DESC").all
+
+    respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @buyrecords }
     end  	
@@ -14,7 +22,7 @@ class Useradmin::BuyrecordsController < ApplicationController
 
   def show
   	@deal = Deal.where("buyer_id = ? and id = ?", current_user.id, params[:id]).first
-  	@value = @deal.dealvalues.select("dealvalues.*").where("dealvalues.user_id = ?", @deal.buyer_id).last.value
+  	@deal_value = @deal.dealvalues.select("dealvalues.*").where("dealvalues.user_id = ?", @deal.buyer_id).last
     @dealask = Dealask.new  	
   end
 
@@ -32,7 +40,7 @@ class Useradmin::BuyrecordsController < ApplicationController
 
   def dealvalues
     @deal = Deal.where("buyer_id = ? and id = ?", current_user.id, params[:id]).first
-    @value = @deal.dealvalues.select("dealvalues.*").where("dealvalues.user_id = ?", @deal.buyer_id).last.value
+    @deal_value = @deal.dealvalues.select("dealvalues.*").where("dealvalues.user_id = ?", @deal.buyer_id).last
     @dealvalue = Dealvalue.new
   end
 
@@ -46,5 +54,13 @@ class Useradmin::BuyrecordsController < ApplicationController
       format.html { redirect_to dealvalues_useradmin_buyrecord_path(params[:id]) }
       format.json { render json: @dealvalue }
     end 
+  end
+
+  def count_buyrecords
+    @countnew = Deal.where("buyer_id = ? AND status = ?", current_user.id, "new").count
+    @countcheck = Deal.where("buyer_id = ? AND status = ?", current_user.id, "check").count
+    @countprocessing = Deal.where("buyer_id = ? AND status = ?", current_user.id, "processing").count
+    @countdeliver = Deal.where("buyer_id = ? AND status = ?", current_user.id, "deliver").count
+    @countcancel = Deal.where("buyer_id = ? AND status = ?", current_user.id, "cancel").count
   end
 end

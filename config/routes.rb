@@ -1,5 +1,5 @@
 Auction::Application.routes.draw do
-  devise_for :users
+  devise_for :users, :controllers => { :registrations => "registrations" }
 
   resources :products, :only => [:index, :show] do
     member do
@@ -38,12 +38,26 @@ Auction::Application.routes.draw do
         get "dealvalues"
         match "createvalue", :via => :post
       end
+
+      namespace :changestatus do
+        match "check", :via => :post
+        match "processing", :via => :post
+        match "deliver", :via => :post
+        match "cancel", :via => :post
+      end
     end
     resources :buyrecords, :only => [:index, :show] do
       member do
         match "createask", :via => :post
         get "dealvalues"
         match "createvalue", :via => :post
+      end
+
+      namespace :changestatus do
+        match "check", :via => :post
+        match "processing", :via => :post
+        match "deliver", :via => :post
+        match "cancel", :via => :post
       end
     end
 

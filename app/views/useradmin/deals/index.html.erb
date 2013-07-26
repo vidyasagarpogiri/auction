@@ -1,8 +1,13 @@
-<% if @deals.length > 0 %>
+<a href="/useradmin/deals?type=new" class="<%= 'active' if params[:type] == 'new' %>">未處理交易(<%= @countnew %>)</a>
+<a href="/useradmin/deals?type=check" class="<%= 'active' if params[:type] == 'check' %>">已收款交易(<%= @countcheck %>)</a>
+<a href="/useradmin/deals?type=processing" class="<%= 'active' if params[:type] == 'processing' %>">處理中交易(<%= @countprocessing %>)</a>
+<a href="/useradmin/deals?type=deliver" class="<%= 'active' if params[:type] == 'deliver' %>">已出貨交易(<%= @countdeliver %>)</a>
+<a href="/useradmin/deals?type=cancel" class="<%= 'active' if params[:type] == 'cancel' %>">已取消交易(<%= @countcancel %>)</a>
 
+<% if @deals.length > 0 %>
 <table>
 	<tr>
-		<th>日期</th><th>訂單編號</th><th>狀態</th>
+		<th>日期</th><th>交易編號</th><th>狀態</th>
 	</tr>
 	<% @deals.each do |deal| %>
 	<tr>
@@ -15,6 +20,6 @@
 
 <% else %>
 
-<p>沒有任何訂單記錄。</p>
+<p>沒有任何交易記錄。</p>
 
 <% end %>
