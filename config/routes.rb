@@ -67,6 +67,9 @@ Auction::Application.routes.draw do
         get "aboutme/edit" => "users#aboutme_edit"
         match "aboutme/update" => "users#aboutme_update", :via => :put
 
+        match 'aboutme/uploadPhoto' => 'users#createPhoto', :via => [:post]
+        match 'aboutme/deletePhoto/:id' => 'users#destroyPhoto', :via => [:delete]
+
         resources :blacklists, :only => [:index, :create, :destroy]
       end
     end

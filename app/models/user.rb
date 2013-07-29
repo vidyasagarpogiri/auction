@@ -14,4 +14,5 @@ class User < ActiveRecord::Base
   has_many :products
   has_many :productasks, :through => :products
   has_many :blacklists
+  has_many :aboutmeimgs
 end
