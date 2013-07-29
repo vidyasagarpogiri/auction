@@ -4,23 +4,11 @@ class Useradmin::ProductasksController < ApplicationController
   layout "useradmin"
 
   def index
-  	@productasks = current_user.productasks.select("productasks.*, products.name").all
-  	# @replyedasks = Array.new
-  	# @unreplyedasks = Array.new
-
-  	# @productasks.each do |productask|
-  	# 	if(productask.productaskres.length > 0)
-  	# 		@replyedasks.push(productask)
-  	# 	else
-  	# 		@unreplyedasks.push(productask)
-  	# 	end
-  	# end
-
-  	# if(params[:reply] == "true")
-  	# 	@productasks = @replyedasks
-  	# else
-  	# 	@productasks = @unreplyedasks
-  	# end
+    if(params[:reply] == "true")
+  		@productasks = current_user.productasks.where('productasks.id IN (SELECT DISTINCT(productask_id) FROM productaskres)').select("productasks.*, products.name").all
+  	else
+  		@productasks = current_user.productasks.where('productasks.id NOT IN (SELECT DISTINCT(productask_id) FROM productaskres)').select("productasks.*, products.name").all
+  	end
 
   	respond_to do |format|
       format.html # index.html.erb

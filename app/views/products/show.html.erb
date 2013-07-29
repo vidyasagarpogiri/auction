@@ -20,10 +20,10 @@
 	<p>問與答歷史紀錄</p>
 	<% if @product.productasks.length > 0 %>
 	<% @product.productasks.each do |productask| %>
-	<p>提問：<br><%= simple_format(productask.content) %></p>
+	<p>提問：<br><%= productask.created_at.strftime("%Y-%m-%d %H:%M") %><%= simple_format(productask.content) %></p>
 
 		<% productask.productaskres.each do |productaskre| %>
-		<p>回覆：<br><%= simple_format(productaskre.content) %></p>
+		<p>回覆：<br><%= productaskre.created_at.strftime("%Y-%m-%d %H:%M") %><%= simple_format(productaskre.content) %></p>
 		<% end %>
 
 	<% end %>

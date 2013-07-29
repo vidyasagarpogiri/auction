@@ -21,6 +21,7 @@
 
 <div>
 	<p>問題：</p>
+	<%= productask.created_at.strftime("%Y-%m-%d %H:%M") %>
 	<%= simple_format(@productask.content) %>
 
 		<% @productask.productaskres.each do |productaskre| %>
