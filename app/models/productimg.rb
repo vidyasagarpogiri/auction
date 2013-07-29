@@ -1,7 +1,7 @@
 class Productimg < ActiveRecord::Base
   attr_accessible :path, :product_id, :image, :name
 
-  validates :image, :name, :product_id, :presence => true
+  validates :image, :product_id, :presence => true
 
   belongs_to :product
 

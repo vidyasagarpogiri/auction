@@ -6,11 +6,6 @@
 </p>
 
 <p>
-  <b>描述:</b><br>
-  <%= simple_format(@product.description) %>
-</p>
-
-<p>
   <b>售價:</b>
   <%= @product.price %>
 </p>
@@ -25,4 +20,13 @@
   <%= @product.status %>
 </p>
 
+<input id="article_content" style="display:none;" type="text" value="<%= @product.description %>">
+<div id="articleContent"></div>
+
 <%= link_to "編輯商品", edit_useradmin_product_path(@product) %> | <%= link_to "返回商品列表", useradmin_products_path %>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  editor.output();
+});
+</script>

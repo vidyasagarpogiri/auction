@@ -23,7 +23,12 @@ Auction::Application.routes.draw do
   end
 
   namespace :useradmin do
-    resources :products
+    resources :products, :except => [:new] do
+      member do
+        match 'uploadPhoto' => 'products#createPhoto', :via => [:post]
+        match 'deletePhoto/:photo_id' => 'products#destroyPhoto', :via => [:delete]
+      end
+    end
     
     resources :productasks, :only => [:index, :show] do
       member do

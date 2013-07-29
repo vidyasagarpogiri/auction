@@ -14,11 +14,8 @@
   <%= f.submit "購買" %>
   <% end %>
 </p>
-
-<p>
-	<%= simple_format(@product.description) %>
-</p>
-
+<input id="article_content" style="display:none;" type="text" value="<%= @product.description %>">
+<div id="articleContent"></div>
 <div>
 	<p>問與答歷史紀錄</p>
 	<% if @product.productasks.length > 0 %>
@@ -47,4 +44,7 @@
 if("<%= alert %>"){
   alert("<%= alert %>");
 }
+$(document).ready(function() {
+  editor.output();
+});
 </script>

@@ -21,15 +21,6 @@ class Useradmin::ProductsController < ApplicationController
     end
   end
 
-  def new
-    @product = Product.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @product }
-    end
-  end
-
   def edit
     @product = Product.find(params[:id])
   end
@@ -37,11 +28,11 @@ class Useradmin::ProductsController < ApplicationController
   def create
     @product = current_user.products.new(params[:product])
     @product.status = "上架"
-
+    
     respond_to do |format|
       if @product.save
-        format.html { redirect_to  useradmin_product_path(@product), notice: 'product was successfully created.' }
-        format.json { render json: @product, status: :created, location: @product }
+        format.html { redirect_to edit_useradmin_product_path(@product), :notice => 'Product was successfully created.' }
+        format.json {  render json: @product, status: :created, location: @product }
       else
         format.html { render action: "new" }
         format.json { render json: @product.errors, status: :unprocessable_entity }
@@ -71,5 +62,33 @@ class Useradmin::ProductsController < ApplicationController
       format.html { redirect_to useradmin_products_path }
       format.json { head :no_content }
     end
+  end
+
+  #create photo
+  def createPhoto
+    @photo = Productimg.new(params[:productimg])
+    @photo.product_id = params[:id]
+
+    respond_to do |format|
+      if @photo.save
+        format.json { render json: @photo, status: :created, location: @photo }
+        format.js
+      else
+        format.json { render json: @photo.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def destroyPhoto
+    @photo = Productimg.find(params[:photo_id])
+    @photopath = "public/uploads/products/"+ @photo.product_id.to_s + "/" + @photo.id.to_s + "-" + @photo.name
+    File.delete(@photopath) #carrierwave will handle this.
+    @photo.destroy
+
+    respond_to do |format|
+          format.html { redirect_to :controller => 'photos', :action => 'index' }
+          format.js
+          format.json { head :no_content }
+      end
   end
 end

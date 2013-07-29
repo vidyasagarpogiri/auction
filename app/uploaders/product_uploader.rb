@@ -3,7 +3,7 @@ class ProductUploader < CarrierWave::Uploader::Base
   storage :file
 
   def store_dir
-    "uploads/products/#{model.user_id}"
+    "uploads/products/#{model.product_id}"
   end
 
   def filename

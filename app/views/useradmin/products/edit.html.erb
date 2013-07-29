@@ -1,7 +1,52 @@
 <h1>編輯商品</h1>
 
 <%= form_for(@product, :url => useradmin_product_path(@product)) do |f| %>
-<%= render :partial => 'form', :locals => { :f => f} %>
+	<div class="field">
+    <%= f.label :name, "商品名稱" %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.hidden_field :description %>
+  </div>
+  <div class="field">
+    <%= f.label :price, "價格" %><br />
+    <%= f.number_field :price %>
+  </div>
+  <div class="field">
+    <%= f.label :amount, "數量" %><br />
+    <%= f.number_field :amount %>
+  </div>
 <% end %>
 
+<div id="editorPanel"></div>
+
+<hr />
+
+<!--show the content of article -->
+<section id="articleContent"></section>
+
+<hr />
+
+<div class="action" id="submit">
+  <a href="#">儲存</a>
+</div>
+
 <%= link_to "取消編輯", useradmin_product_path(@product) %>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	editor.init({articleModel: "product", articleAttr: "description", photoModel:"productimg"});
+
+	$("#submit").click(function(e){
+		e.preventDefault();
+
+		if(!editor.isPostNotSent()){
+			$("#edit_product_<%= @product.id %>").submit();
+		}
+		else{
+			editor.alert("段落編輯尚未完成。", "error");
+		}
+		
+	});
+});
+</script>
