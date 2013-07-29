@@ -5,11 +5,6 @@
 </p>
 
 <p>
-  <b>Description:</b>
-  <%= @product.description %>
-</p>
-
-<p>
   <b>Price:</b>
   <%= @product.price %>
 </p>
@@ -19,9 +14,12 @@
   <%= @product.status %>
 </p>
 
+<input id="article_content" style="display:none;" type="text" value="<%= @product.description %>">
+<div id="articleContent"></div>
+
 <div>
 	<p>問題：</p>
-	<%= productask.created_at.strftime("%Y-%m-%d %H:%M") %>
+	<%= @productask.created_at.strftime("%Y-%m-%d %H:%M") %>
 	<%= simple_format(@productask.content) %>
 
 		<% @productask.productaskres.each do |productaskre| %>
@@ -42,3 +40,9 @@
 <% end %>
 
 <%= link_to "返回問與答列表", useradmin_productasks_path %>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  editor.output();
+});
+</script>

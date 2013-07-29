@@ -4,11 +4,6 @@
 </p>
 
 <p>
-  <b>Description:</b>
-  <%= @product.description %>
-</p>
-
-<p>
   <b>Price:</b>
   <%= @product.price %>
 </p>
@@ -17,6 +12,9 @@
   <b>Status:</b>
   <%= @product.status %>
 </p>
+
+<input id="article_content" style="display:none;" type="text" value="<%= @product.description %>">
+<div id="articleContent"></div>
 
 <div>
 	<p>問題：</p>
@@ -28,4 +26,10 @@
 		<% end %>
 </div>
 
-<%= link_to "返回問與答列表", useradmin_myasks_path %>
+<%= link_to "返回我的提問列表", useradmin_myasks_path %>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  editor.output();
+});
+</script>
