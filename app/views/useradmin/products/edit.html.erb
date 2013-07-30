@@ -16,6 +16,12 @@
     <%= f.label :amount, "數量" %><br />
     <%= f.number_field :amount %>
   </div>
+  <div class="field">
+    <%= f.label :region, "商品所在地區" %>：<%= f.select :region, options_for_select(["臺北市", "新北市", "基隆市", "桃園縣", "新竹縣", "新竹市", "苗栗縣", "臺中市", "彰化縣", "南投縣", "雲林縣", "嘉義縣", "嘉義市", "臺南市", "高雄市", "屏東縣", "宜蘭縣", "花蓮縣", "臺東縣", "離島", "海外"], :selected => @product.region) %>
+  </div>
+  <div class="field">
+    <%= f.label :shippingway, "運送方式" %><%= f.select :shippingway, options_for_select(["way1", "way2"], :selected => @product.shippingway) %>
+  </div>
 <% end %>
 
 <div id="editorPanel"></div>

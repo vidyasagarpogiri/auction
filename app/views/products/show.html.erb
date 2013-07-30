@@ -4,6 +4,8 @@
 </p>
 <p>
   價格：$ <%= @product.price %><br>
+  物品所在地:<%= @product.region %><br>
+  運送方式:<%= @product.shippingway %><br>
 
   <p>庫存 <%= @product.amount %></p>
   <%= form_for(@deal, :url => check_deals_path) do |f| %>
