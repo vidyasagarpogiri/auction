@@ -1,12 +1,41 @@
+<%= link_to "取消訂單", useradmin_deal_changestatus_cancel_path(@deal), :method => :post if @deal.status != "cancel" %>
+
 <p>訂單日期：<%= @deal.created_at.strftime("%Y-%m-%d %H:%M") %></p>
 <p>訂單編號：<%= @deal.serialnum %></p>
-<p>訂單狀態：<%= @deal.status %> <%= link_to "給予評價", dealvalues_useradmin_deal_path(@deal) %></p>
+<p>訂單狀態：<%= @deal.status %> <%= link_to "給予評價", dealvalues_useradmin_deal_path(@deal) if (@deal.status == "deliver") %></p>
 <p>評價：<%= @deal_value ? @deal_value.value : "沒有評價。" %></p>
 <p>購買人：<%= @deal.buyername %></p>
 <p>電話：<%= @deal.buyertel %></p>
 
 <p><%= @deal.productname %></p>
 <p>數量：<%= @deal.amount %></p>
+<p>
+	<% case @deal.status %>
+	<% when 'new' %>
+		<% if @deal.paytype == "匯款" %>
+			<%= link_to "確認已收款", useradmin_deal_changestatus_check_path(@deal), :method => :post %>
+		<% else %>
+			<%= link_to "確認訂單成立", useradmin_deal_changestatus_processing_path(@deal), :method => :post %>
+		<% end %>
+
+	<% when 'check' %>
+		<%= link_to "確認訂單成立", useradmin_deal_changestatus_processing_path(@deal), :method => :post %>
+
+	<% when 'processing' %>
+		<%= form_for(@deal, :url => useradmin_deal_changestatus_deliver_path(@deal), :method => :post) do |f| %>
+			<p>運送方式 : <%= f.select(:shippingway, options_for_select([["請選擇運送方式", ""],["宅配", "宅配"],["郵寄", "郵寄"]]) ) %></p>
+			<p>追蹤碼 : <%= f.text_field :shippingcode %></p>
+			<%= f.submit "確認出貨" %>
+		<% end %>
+
+	<% when 'deliver' %>
+		<%= "已出貨" %><br>
+		運送方式 : <%= @deal.shippingway %> / 追蹤碼 : <%= @deal.shippingcode %>
+
+	<% when 'cancel' %>
+		<%= "已取消此筆訂單" %>
+	<% end %>
+</p>
 
 <hr>
 

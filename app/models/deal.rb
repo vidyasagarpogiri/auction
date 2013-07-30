@@ -4,4 +4,5 @@ class Deal < ActiveRecord::Base
   validates :amount, :buyer_id, :buyername, :buyertel, :seller_id, :product_id, :productname, :status, :presence => true
   has_many :dealasks
   has_many :dealvalues
+  has_many :deallogs
 end
