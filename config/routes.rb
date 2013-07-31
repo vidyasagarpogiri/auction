@@ -2,6 +2,9 @@ Auction::Application.routes.draw do
   devise_for :users, :controllers => { :registrations => "registrations" }
 
   resources :products, :only => [:index, :show] do
+    collection do
+      get "search/:query" => "products#search", :as => "search"
+    end
     member do
       match "ask", :via => :post
     end

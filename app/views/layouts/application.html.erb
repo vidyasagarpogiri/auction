@@ -26,7 +26,10 @@
 	</p>
 </div>
 <div>
-	產品搜尋
+	<%= form_tag(products_path, method: "get") do %>
+		<%= text_field_tag(:query) %>
+		<%= submit_tag("搜尋商品") %>
+	<% end %>
 </div>
 <div>
 	產品分類

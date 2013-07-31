@@ -1,11 +1,26 @@
 #encoding: UTF-8
 class ProductsController < ApplicationController
   def index
-    @products = Product.where(:status => "上架").all
+    if(params[:query])
+      params[:query] = params[:query].gsub(/[\/]+/, '')
+    end
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @products }
+    if(params[:query] && params[:query].length > 0)
+      respond_to do |format|
+        format.html { redirect_to search_products_path(params[:query]) }
+        format.json { render json: @products }
+      end
+
+    else
+      if(params[:price])
+        @products = Product.where(:status => "上架").order("price #{params[:price] == 'DESC' ? 'DESC' : 'ASC' }").all
+      else
+        @products = Product.where(:status => "上架").order("created_at #{params[:create] == 'ASC' ? 'ASC' : 'DESC' }").all
+      end
+      respond_to do |format|
+        format.html # index.html.erb
+        format.json { render json: @products }
+      end
     end
   end
 
@@ -37,7 +52,14 @@ class ProductsController < ApplicationController
         format.json { render json: @productask }
       end
     end
-    
+  end
+
+  def search
+    if(params[:price])
+        @products = Product.where("status = '上架' and name like '%#{params[:query]}%'").order("price #{params[:price] == 'DESC' ? 'DESC' : 'ASC' }").all
+    else
+      @products = Product.where("status = '上架' and name like '%#{params[:query]}%'").order("created_at #{params[:create] == 'ASC' ? 'ASC' : 'DESC' }").all
+    end
   end
 
 end

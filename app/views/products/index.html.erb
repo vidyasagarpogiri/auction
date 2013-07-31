@@ -1,17 +1,5 @@
 <% if @products.length > 0 %>
-<div>過濾：商品名稱/地區/價格</div>
-<div>排序：金額/上架時間</div>
-<table>
-	<tr>
-		<th>商品列表</th>
-	</tr>
-	<% @products.each do |product| %>
-	<tr>
-		<td><%= link_to product.name, product_path(product) %></td>
-	</tr>
-	<% end %>
-</table>
-
+<%= render "list" %>
 <% else %>
 
 <p>沒有任何上架商品。</p>

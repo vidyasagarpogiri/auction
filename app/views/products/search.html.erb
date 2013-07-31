@@ -1,0 +1,10 @@
+<div>" <%= params[:query] %> "的搜尋結果</div>
+<br>
+
+<% if @products.length > 0 %>
+<%= render "list" %>
+<% else %>
+
+<p>沒有符合搜尋的商品。</p>
+
+<% end %>
