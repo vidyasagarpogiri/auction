@@ -5,22 +5,25 @@ class ProductsController < ApplicationController
       params[:query] = params[:query].gsub(/[\/]+/, '')
     end
 
-    if(params[:query] && params[:query].length > 0)
-      respond_to do |format|
-        format.html { redirect_to search_products_path(params[:query]) }
-        format.json { render json: @products }
+    if(params[:region])
+      begin
+        params[:region] = Productregion.find(params[:region]).region
+      rescue
+        params[:region] = nil
       end
+    end
 
+    @querystring = "status = '上架' and name like '%#{params[:query]}%'" + ( params[:region] ? "and region = '#{params[:region]}'" : "" )
+
+    if(params[:price])
+      @products = Product.where(@querystring).order("price #{params[:price] == 'DESC' ? 'DESC' : 'ASC' }").all
     else
-      if(params[:price])
-        @products = Product.where(:status => "上架").order("price #{params[:price] == 'DESC' ? 'DESC' : 'ASC' }").all
-      else
-        @products = Product.where(:status => "上架").order("created_at #{params[:create] == 'ASC' ? 'ASC' : 'DESC' }").all
-      end
-      respond_to do |format|
-        format.html # index.html.erb
-        format.json { render json: @products }
-      end
+      @products = Product.where(@querystring).order("created_at #{params[:create] == 'ASC' ? 'ASC' : 'DESC' }").all
+    end
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @products }
     end
   end
 

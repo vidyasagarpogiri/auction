@@ -1,23 +1,19 @@
-<div>
-	<p>地區</p>
-	<p>價格</p>
-</div>
 <table>
 	<tr>
 		<th>上架日期
 			<% if(params[:create] == "ASC") %>
-				<%= link_to "↑", url_for(:create => "DESC") %>
+				<%= link_to "↑", url_for(params.except(:controller, :action).merge(:create => "DESC", :price => nil)) %>
 			<% else %>
-				<%= link_to "↓", url_for(:create => "ASC") %>
+				<%= link_to "↓", url_for(params.except(:controller, :action).merge(:create => "ASC", :price => nil)) %>
 			<% end %>
 		</th>
 		<th>商品</th>
 		<th>名稱</th>
 		<th>價格
 			<% if(params[:price] == "ASC") %>
-				<%= link_to "↑", url_for(:price => "DESC") %>
+				<%= link_to "↑", url_for(params.except(:controller, :action).merge(:price => "DESC", :create => nil)) %>
 			<% else %>
-				<%= link_to "↓", url_for(:price => "ASC") %>
+				<%= link_to "↓", url_for(params.except(:controller, :action).merge(:price => "ASC", :create => nil)) %>
 			<% end %>
 		</th>
 		<th>所在地</th>
@@ -25,7 +21,7 @@
 	<% @products.each do |product| %>
 	<tr>
 		<td><%= product.created_at.strftime("%Y-%m-%d") %></td>
-		<td><%= product.cover || "無圖片" %></td>
+		<td><%= product.cover ? image_tag(product.cover) : "無圖片" %></td>
 		<td><%= link_to product.name, product_path(product) %></td>
 		<td><%= product.price %></td>
 		<td><%= product.region %></td>

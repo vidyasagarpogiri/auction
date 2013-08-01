@@ -1,3 +1,18 @@
+<% if params[:query] %>
+<div>" <%= params[:query] %> "的搜尋結果</div>
+<% end %>
+
+<div>
+	<p>地區：
+		<% Productregion.all.each do |productregion| %>
+		<%= link_to productregion.region, url_for(params.except(:controller, :action).merge(:region => productregion.id)) %>
+		<% end %>
+	</p>
+	<p>價格：</p>
+
+	<%= link_to "所有商品", url_for(params.except(:controller, :action).merge(:region => nil, :price => nil)) %>
+</div>
+
 <% if @products.length > 0 %>
 <%= render "list" %>
 <% else %>
