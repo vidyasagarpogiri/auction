@@ -5,6 +5,7 @@ class Useradmin::UsersController < ApplicationController
 
   def aboutme_update
   	current_user.aboutme = params[:user][:aboutme]
+    current_user.accountinfo = params[:user][:accountinfo]
   	current_user.save
   	respond_to do |format|
   		format.html { redirect_to aboutme_useradmin_users_path }

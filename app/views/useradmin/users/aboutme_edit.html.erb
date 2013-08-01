@@ -1,6 +1,16 @@
+<%= form_for(current_user, :url => aboutme_update_useradmin_users_path) do |f| %>
+<h4>編輯帳戶資訊</h4>
+<%= f.text_area :accountinfo, :rows => 5 %>
+<p>
+	帳戶資訊將在交易成立時隨email提供給買家。<br>
+	帳戶資訊範本：<br>
+	XX銀行XX分行 / 帳號：000000000000<br>
+	戶名：XXX
+</p>
+
 <h4>編輯關於我</h4>
 
-<%= form_for(current_user, :url => aboutme_update_useradmin_users_path) do |f| %>
+
 <%= f.hidden_field :aboutme %>
 <% end %>
 

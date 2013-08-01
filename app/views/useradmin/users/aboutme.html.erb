@@ -1,3 +1,6 @@
+<h4>帳戶資訊</h4>
+<%= (current_user.accountinfo && current_user.accountinfo.length > 0) ? simple_format(current_user.accountinfo) : "尚未填寫帳戶資訊" %>
+
 <h4>關於我</h4>
 <input id="article_content" style="display:none;" type="text" value="<%= current_user.aboutme %>">
 <div id="articleContent"></div>
