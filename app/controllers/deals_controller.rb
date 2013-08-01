@@ -2,6 +2,7 @@
 class DealsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :find_product, :except => [:finish]
+  before_filter :check_buyable
   before_filter :check_stock, :except => [:finish]
 
   def check
@@ -57,6 +58,18 @@ class DealsController < ApplicationController
         format.html { redirect_to product_path(@product.id) }
       end
     end    
+  end
+
+  def check_buyable
+    if(@product.user_id == current_user.id)
+      flash[:alert] = "您無法購買自己的商品。"
+      redirect_to product_path(@product.id)
+
+    elsif(is_in_blacklist(@product.user_id, current_user.id))
+      flash[:alert] = "您無法購買此商品。"
+      redirect_to product_path(@product.id)
+    end
+    
   end
 
 end

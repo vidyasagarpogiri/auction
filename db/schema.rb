@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130801061853) do
+ActiveRecord::Schema.define(:version => 20130801100620) do
 
   create_table "aboutmeimgs", :force => true do |t|
     t.integer  "user_id"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(:version => 20130801061853) do
     t.integer  "block_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "block_name"
   end
 
   create_table "dealasks", :force => true do |t|

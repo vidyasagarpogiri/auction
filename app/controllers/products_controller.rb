@@ -43,16 +43,23 @@ class ProductsController < ApplicationController
     @productask.product_id = params[:id]
     @productask.user_id = current_user.id
 
-    if(@productask.save)
+    @product = Product.where(:status => "上架", :id => params[:id]).select("products.*, users.name as username").joins("left join users on users.id = products.user_id").first
+
+    if(@product.user_id != current_user.id && @productask.save)
       respond_to do |format|
         format.html { redirect_to product_path(params[:id]), notice: 'Ask was successfully created.' }
         format.json { render json: @productask }
       end
+    elsif @product.user_id == current_user.id
+      respond_to do |format|
+        format.html { redirect_to product_path(params[:id]), alert: '您無法對自己的商品發問。' }
+        format.json { render json: @productask }
+      end        
     else
-      @product = product.where(:status => "上架", :id => params[:id]).first
+      @deal = Deal.new
       respond_to do |format|
         format.html { render "show" }
-        format.json { render json: @productask }
+        format.json { render json: @productask.errors }
       end
     end
   end

@@ -9,11 +9,20 @@ class Useradmin::BlacklistsController < ApplicationController
   end
 
   def create
-  	@blacklist = current_user.blacklists.new(params[:blacklist])
-  	@blacklist.save
+    @user = User.where("name = ?", params[:blacklist][:block_id]).first
+    if(@user)
+    	@blacklist = current_user.blacklists.new(params[:blacklist])
+      @blacklist.block_id = @user.id
+      @blacklist.block_name = @user.name
+    	@blacklist.save
 
-  	respond_to do |format|
-  		format.html { redirect_to useradmin_blacklists_path }
+    	respond_to do |format|
+    		format.html { redirect_to useradmin_blacklists_path }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to useradmin_blacklists_path, alert: '使用者不存在。' }
+      end
     end
   	
   end

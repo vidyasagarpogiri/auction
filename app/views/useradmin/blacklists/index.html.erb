@@ -13,7 +13,7 @@
 	</tr>
 	<% @blacklists.each do |blacklist| %>
 	<tr>
-		<td><%= blacklist.block_id %></td>
+		<td><%= link_to blacklist.block_name, user_path(blacklist.block_name), target: "_blank" %></td>
 		<td><%= link_to "移除", useradmin_blacklist_path(blacklist), :method => :delete, :data => {:confirm => "確定移除？"} %></td>
 	</tr>
 	<% end %>
@@ -24,3 +24,9 @@
 <p>尚未建立黑名單。</p>
 
 <% end %>
+
+<script type="text/javascript">
+if("<%= alert %>"){
+	alert("<%= alert %>");
+}
+</script>
