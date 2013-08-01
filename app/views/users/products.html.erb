@@ -1,22 +1,41 @@
 <%= link_to "賣家資訊", user_path(params[:id]) %>
 <%= link_to "商場", products_user_path(params[:id]) %>
 <%= link_to "交易評價", deals_user_path(params[:id]) %>
-<p>商家賣場</p>
+<p><%= @user.name %>賣場</p>
 
-<% if @products && @products.length > 0 %>
-<div>過濾：商品名稱/地區/價格</div>
-<div>排序：金額/上架時間</div>
-<table>
-	<tr>
-		<th>商品列表</th>
-	</tr>
-	<% @products.each do |product| %>
-	<tr>
-		<td><%= link_to product.name, product_path(product) %></td>
-	</tr>
+<div>
+	<%= form_tag(products_user_path(params[:id]), :method => :get) do %>
+		<%= text_field_tag(:query) %>
+		<%= submit_tag("搜尋商品") %>
 	<% end %>
-</table>
+</div>
 
+<% if params[:query] %>
+<div>" <%= params[:query] %> "的搜尋結果</div>
+<% end %>
+
+<div>
+	<p>地區：
+		<% Productregion.all.each do |productregion| %>
+		<%= link_to productregion.region, url_for(params.except(:controller, :action).merge(:region => productregion.id)) %>
+		<% end %>
+	</p>
+	<p>價格區間：
+		<%= form_tag(products_user_path(params[:id]), method: "get") do %>
+		<%= number_field_tag(:pricemax, params[:pricemax]) %>(最高價) - <%= number_field_tag(:pricemin, params[:pricemin]) %>(最低價)
+		<%= hidden_field_tag(:query, params[:query]) if params[:query] %>
+		<%= hidden_field_tag(:create, params[:create]) if params[:create] %>
+		<%= hidden_field_tag(:price, params[:price]) if params[:price] %>
+		<%= hidden_field_tag(:region, params[:region]) if params[:region] %>
+		<%= submit_tag("送出") %>
+	<% end %>
+	</p>
+
+	<%= link_to "所有商品", url_for(params.except(:controller, :action).merge(:region => nil, :pricemax => nil, :pricemin => nil)) %>
+</div>
+
+<% if @products.length > 0 %>
+<%= render "products/list" %>
 <% else %>
 
 <p>沒有任何上架商品。</p>

@@ -1,7 +1,7 @@
 <%= link_to "賣家資訊", user_path(params[:id]) %>
 <%= link_to "商場", products_user_path(params[:id]) %>
 <%= link_to "交易評價", deals_user_path(params[:id]) %>
-<p>歷史交易評價</p>
+<p><%= @user.name %>歷史交易評價</p>
 
 <% if @deals && @deals.length > 0 %>
 	<% @deals.each do |deal| %>

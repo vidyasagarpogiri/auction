@@ -10,7 +10,25 @@ class UsersController < ApplicationController
   end
 
   def products
-    @products = @user.products.where("status = ?", "上架").all
+    if(params[:query])
+      params[:query] = params[:query].gsub(/[\/]+/, '')
+    end
+
+    if(params[:region])
+      begin
+        @region = Productregion.find(params[:region]).region
+      rescue
+        params[:region] = nil
+      end
+    end
+
+    @querystring = "status = '上架' and name like '%#{params[:query]}%'" + ( @region ? "and region = '#{@region}'" : "" ) + ( (params[:pricemax] && params[:pricemax].length > 0) ? "and price <= '#{params[:pricemax]}'" : "" ) + ( (params[:pricemin] && params[:pricemin].length > 0) ? "and price >= '#{params[:pricemin]}'" : "" )
+
+    if(params[:price])
+      @products = @user.products.where(@querystring).order("price #{params[:price] == 'DESC' ? 'DESC' : 'ASC' }").all
+    else
+      @products = @user.products.where(@querystring).order("created_at #{params[:create] == 'ASC' ? 'ASC' : 'DESC' }").all
+    end
     
     respond_to do |format|
       format.html 

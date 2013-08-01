@@ -7,13 +7,13 @@ class ProductsController < ApplicationController
 
     if(params[:region])
       begin
-        params[:region] = Productregion.find(params[:region]).region
+        @region = Productregion.find(params[:region]).region
       rescue
         params[:region] = nil
       end
     end
 
-    @querystring = "status = '上架' and name like '%#{params[:query]}%'" + ( params[:region] ? "and region = '#{params[:region]}'" : "" )
+    @querystring = "status = '上架' and name like '%#{params[:query]}%'" + ( @region ? "and region = '#{@region}'" : "" ) + ( (params[:pricemax] && params[:pricemax].length > 0) ? "and price <= '#{params[:pricemax]}'" : "" ) + ( (params[:pricemin] && params[:pricemin].length > 0) ? "and price >= '#{params[:pricemin]}'" : "" )
 
     if(params[:price])
       @products = Product.where(@querystring).order("price #{params[:price] == 'DESC' ? 'DESC' : 'ASC' }").all
@@ -54,14 +54,6 @@ class ProductsController < ApplicationController
         format.html { render "show" }
         format.json { render json: @productask }
       end
-    end
-  end
-
-  def search
-    if(params[:price])
-        @products = Product.where("status = '上架' and name like '%#{params[:query]}%'").order("price #{params[:price] == 'DESC' ? 'DESC' : 'ASC' }").all
-    else
-      @products = Product.where("status = '上架' and name like '%#{params[:query]}%'").order("created_at #{params[:create] == 'ASC' ? 'ASC' : 'DESC' }").all
     end
   end
 

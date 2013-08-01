@@ -1,3 +1,10 @@
+<div>
+	<%= form_tag(products_path, :method => :get) do %>
+		<%= text_field_tag(:query) %>
+		<%= submit_tag("搜尋商品") %>
+	<% end %>
+</div>
+
 <% if params[:query] %>
 <div>" <%= params[:query] %> "的搜尋結果</div>
 <% end %>
@@ -8,9 +15,18 @@
 		<%= link_to productregion.region, url_for(params.except(:controller, :action).merge(:region => productregion.id)) %>
 		<% end %>
 	</p>
-	<p>價格：</p>
+	<p>價格區間：
+		<%= form_tag(products_path, method: "get") do %>
+		<%= number_field_tag(:pricemax, params[:pricemax]) %>(最高價) - <%= number_field_tag(:pricemin, params[:pricemin]) %>(最低價)
+		<%= hidden_field_tag(:query, params[:query]) if params[:query] %>
+		<%= hidden_field_tag(:create, params[:create]) if params[:create] %>
+		<%= hidden_field_tag(:price, params[:price]) if params[:price] %>
+		<%= hidden_field_tag(:region, params[:region]) if params[:region] %>
+		<%= submit_tag("送出") %>
+	<% end %>
+	</p>
 
-	<%= link_to "所有商品", url_for(params.except(:controller, :action).merge(:region => nil, :price => nil)) %>
+	<%= link_to "所有商品", url_for(params.except(:controller, :action).merge(:region => nil, :pricemax => nil, :pricemin => nil)) %>
 </div>
 
 <% if @products.length > 0 %>
