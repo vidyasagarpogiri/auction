@@ -79,7 +79,7 @@ Auction::Application.routes.draw do
       end
     end
 
-    root :to => "products#index"
+    root :to => "root#index"
   end
 
   root :to => "products#index"
