@@ -13,4 +13,8 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+
+/config/environments
+/config/deploy
+
 /public/uploads/*

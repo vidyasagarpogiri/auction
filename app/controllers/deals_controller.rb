@@ -2,7 +2,7 @@
 class DealsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :find_product, :except => [:finish]
-  before_filter :check_buyable
+  before_filter :check_buyable, :except => [:finish]
   before_filter :check_stock, :except => [:finish]
 
   def check

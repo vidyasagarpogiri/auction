@@ -11,7 +11,7 @@ class Useradmin::RootController < ApplicationController
     @queryMyasks = "SELECT productasks.id, productaskres.created_at, 'myask' as type, '發問回覆' as class, null as dealstatus, products.name as productname, null as username, null as ordernum FROM productaskres INNER JOIN productasks ON productaskres.productask_id = productasks.id  INNER JOIN products ON productasks.product_id = products.id WHERE productasks.user_id = " + current_user.id.to_s + " GROUP BY productaskres.productask_id"
     @queryDeallogs = "SELECT deals.id, deallogs.created_at, 'deallog' as type, '交易狀態' as class, deals.status as dealstatus, null as productname, null as username, deals.serialnum as ordernum FROM deallogs INNER JOIN deals ON deallogs.deal_id = deals.id WHERE deals.buyer_id = " + current_user.id.to_s
 
-    @msgs = ActiveRecord::Base.connection.execute("SELECT * FROM ( #{@queryProductasks} UNION ALL #{@queryDeals} UNION ALL #{@queryDealasks} UNION ALL #{@queryDealvalues} UNION ALL #{@queryMyasks} UNION ALL #{@queryDeallogs} ) results ORDER BY created_at DESC")
+    @msgs = ActiveRecord::Base.connection.select_all("SELECT * FROM ( #{@queryProductasks} UNION ALL #{@queryDeals} UNION ALL #{@queryDealasks} UNION ALL #{@queryDealvalues} UNION ALL #{@queryMyasks} UNION ALL #{@queryDeallogs} ) results ORDER BY created_at DESC")
   end
 
 end
