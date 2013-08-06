@@ -17,7 +17,12 @@
 
 <p>
   <b>狀態:</b>
-  <%= @product.status %>
+  <%= @product.status %> 
+  <% if(@product.status == "上架") %>
+    <%= link_to "將此商品下架" ,disable_useradmin_product_path(@product), :method => :post %>
+  <% else %>
+    <%= link_to "將此商品上架" ,enable_useradmin_product_path(@product), :method => :post %>
+  <% end %>
 </p>
 
 <p>

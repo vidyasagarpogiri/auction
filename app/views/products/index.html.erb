@@ -5,7 +5,7 @@
 	<% end %>
 </div>
 
-<% if params[:query] %>
+<% if params[:query] && params[:query].length > 0 %>
 <div>" <%= params[:query] %> "的搜尋結果</div>
 <% end %>
 

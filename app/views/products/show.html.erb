@@ -1,3 +1,4 @@
+<% if @product %>
 <p><%= @product.name %></p>
 <p>
 	賣家資訊：<%= link_to @product.username, user_path(@product.username) %>
@@ -50,3 +51,6 @@ $(document).ready(function() {
   editor.output();
 });
 </script>
+<% else %>
+<p>找不到該商品。</p>
+<% end %>

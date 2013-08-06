@@ -27,6 +27,9 @@ Auction::Application.routes.draw do
       member do
         match 'uploadPhoto' => 'products#createPhoto', :via => [:post]
         match 'deletePhoto/:photo_id' => 'products#destroyPhoto', :via => [:delete]
+
+        match "enable", :via => :post
+        match "disable", :via => :post
       end
     end
     
@@ -80,6 +83,22 @@ Auction::Application.routes.draw do
     end
 
     root :to => "root#index"
+  end
+
+  namespace :admin do
+    get "login", "logout"
+    match "checkAdmin", :via => :post
+
+    resources :users, :only => [:index, :show]
+
+    resources :products, :only => [:index, :show] do
+      member do
+        match "enable", :via => :post
+        match "disable", :via => :post
+      end
+    end
+
+    root :to => "products#index"
   end
 
   root :to => "products#index"
