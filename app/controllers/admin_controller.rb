@@ -1,6 +1,7 @@
 #encoding: utf-8
 class AdminController < ApplicationController
 	before_filter :is_admin, :except => [:login, :checkAdmin]
+	layout 'admin'
 
 	def login
 		redirect_to admin_root_path if(session[:admin])

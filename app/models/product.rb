@@ -9,6 +9,7 @@ class Product < ActiveRecord::Base
   before_update :check_productnum
 
   belongs_to :user
+  belongs_to :productclass
   has_many :productasks
   has_many :productimgs, dependent: :destroy
 

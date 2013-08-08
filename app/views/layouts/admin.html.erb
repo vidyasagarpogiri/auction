@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  
+  <link rel="stylesheet" type="text/css" href="/peditor/css/peditor.css">
+  <script src="/peditor/js/editor.js"></script>
+  <script src="/peditor/js/editor_p.js"></script>
+  <script src="/peditor/js/editor_img.js"></script>
+  <script src="/peditor/js/editor_list.js"></script>
+  <script src="/peditor/js/editor_video.js"></script>
+  
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div>
+	<p><%= link_to "回首頁", root_path %> 
+	<% if session[:admin] %>
+	 Hi, <%= session[:admin].username %> <%= link_to "登出", admin_logout_path %>
+   <p><%= link_to "會員管理", admin_users_path %>｜<%= link_to "商品管理", admin_products_path %>｜<%= link_to "商品分類", admin_productclasses_path %></p>
+	<% end %>
+	</p>
+</div>
+<%= yield %>
+
+</body>
+</html>

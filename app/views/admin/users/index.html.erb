@@ -1,0 +1,26 @@
+<% if @users.length > 0 %>
+<table>
+	<tr>
+		<th>加入會員日期</th>
+		<th>姓名</th>
+		<th>email</th>
+		<th>權限狀態</th>
+		<th>最近登入時間</th>
+		<th>最近登入ip</th>
+	</tr>
+	<% @users.each do |user| %>
+	<tr>
+		<td><%= user.created_at.strftime("%Y-%m-%d") %></td>
+		<td><%= user.name %></td>
+		<td><%= user.email %></td>
+		<td><%= user.status || "正常" %></td>
+		<td><%= user.current_sign_in_at ? user.current_sign_in_at.strftime("%Y-%m-%d %H:%M") : "沒有登入記錄" %></td>
+		<td><%= user.current_sign_in_ip %></td>
+	</tr>
+	<% end %>
+</table>
+<% else %>
+
+<p>沒有任何會員。</p>
+
+<% end %>

@@ -42,6 +42,8 @@ gem 'delayed_job'
 gem 'delayed_job_active_record'
 gem 'daemons'
 
+gem 'awesome_nested_set'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
