@@ -1,5 +1,5 @@
 <%= form_for(@productclass, :url => admin_productclasses_path) do |f| %>
-目前分類位置：<p style="display: inline;" id="cate_path">網站</p><br>
+目前分類位置：<p style="display: inline;" id="cate_path">root</p><br>
 選擇分類：<p style="display: inline;" id="cate_children">
 	<% Productclass.roots.each do |root_cate| %>
 	<%= link_to root_cate.name, select_admin_productclass_path(root_cate), :remote => true %>

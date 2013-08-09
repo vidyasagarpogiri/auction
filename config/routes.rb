@@ -101,6 +101,7 @@ Auction::Application.routes.draw do
     resources :productclasses do
       member do
         get "select"
+        get "addsub"
       end
     end
 

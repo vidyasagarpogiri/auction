@@ -1,0 +1,17 @@
+<%= form_for(@productclass, :url => admin_productclasses_path) do |f| %>
+目前分類位置：
+<p>
+	root
+	<% @parent && @parent.self_and_ancestors.each do |parent| %>
+		<span> > <%= parent.name %> </span>
+	<% end %></p>
+</p>
+
+分類名稱：<%= f.text_field :name %><br>
+<%= f.text_field :parent_id, :value => (@parent ? @parent.id.to_s : "") %>
+
+<%= f.submit "建立分類" %>
+
+<% end %>
+
+<%= link_to "取消", admin_productclass_path(@parent || "root") %>

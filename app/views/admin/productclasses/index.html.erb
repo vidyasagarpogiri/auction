@@ -1,5 +1,6 @@
-<%= link_to "新增分類", new_admin_productclass_path %>
-
+<%= link_to "新增分類", new_admin_productclass_path %><br>
+<br>
+<%= link_to "root", admin_productclass_path("root") %>
 <%= nested_li(@productclasses) do |productclass| %>
 	<%= link_to productclass.name, admin_productclass_path(productclass) %>
 <% end %>

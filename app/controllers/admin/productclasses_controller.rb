@@ -4,12 +4,21 @@ class Admin::ProductclassesController < AdminController
   end
 
   def show
-    @productclass = Productclass.find(params[:id])
+    if(params[:id] != "root")
+      @productclass = Productclass.find(params[:id])
+    end
     
   end
 
   def new
   	@productclass = Productclass.new	
+  end
+
+  def addsub
+    if(params[:id].to_i > 0)
+      @parent = Productclass.find(params[:id])
+    end
+    @productclass = Productclass.new
   end
 
   def create
@@ -29,9 +38,11 @@ class Admin::ProductclassesController < AdminController
 
   def update
     @productclass = Productclass.find(params[:id])
+    
     if(params[:productclass][:parent_id] == "0")
       params[:productclass].delete(:parent_id)
     end
+
     respond_to do |format|
       if @productclass.update_attributes(params[:productclass])
         format.html { redirect_to admin_productclasses_path }
