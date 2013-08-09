@@ -1,0 +1,5 @@
+<%= nested_li(@productclass.self_and_descendants) do |productclass| %>
+	<%= productclass.name %>
+<% end %>
+
+<%= link_to "編輯分類", edit_admin_productclass_path(@productclass) %>｜<%= link_to "刪除分類", admin_productclass_path(@productclass), :method => "delete", :data => { :confirm => "確定刪除？" } %>

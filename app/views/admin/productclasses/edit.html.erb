@@ -1,0 +1,18 @@
+<%= form_for(@productclass, :url => admin_productclass_path) do |f| %>
+目前分類位置：<p style="display: inline;" id="cate_path"><input type="radio" name="productclass[parent_id]" value="0" checked /> <%= @productclass.parent ? @productclass.parent.name : "root" %></p><br>
+移動到母分類：<p id="cate_children">
+	<% if @productclass.parent %>
+	<input type="radio" name="productclass[parent_id]" value="" /> root
+	<% end %>
+	<%= nested_li(@productclasses) do |productclass| %>
+	<input type="radio" name="productclass[parent_id]" value="<%= productclass.id %>" /> <%= productclass.name %>
+	<% end %>
+</p><br>
+
+分類名稱：<%= f.text_field :name %><br>
+
+<%= f.submit "修改分類" %>
+
+<% end %>
+
+<%= link_to "取消", admin_productclass_path(@productclass) %>

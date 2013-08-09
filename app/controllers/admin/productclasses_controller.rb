@@ -3,20 +3,9 @@ class Admin::ProductclassesController < AdminController
     @productclasses = Productclass.order('lft ASC').all
   end
 
-  def select
-    if(params[:id].to_i == 0)
-      @productclass = Productclass.new
-      @children = Productclass.roots
-    else
-      @productclass = Productclass.find(params[:id])
-      @parent = @productclass.parent
-      @children = @productclass.children
-    end
-
-  	respond_to do |format|      
-      format.js
-    end
-  	
+  def show
+    @productclass = Productclass.find(params[:id])
+    
   end
 
   def new
@@ -30,6 +19,53 @@ class Admin::ProductclassesController < AdminController
     respond_to do |format|
       format.html { redirect_to admin_productclasses_path }
     end
+  end
+
+  def edit
+    @productclass = Productclass.find(params[:id])
+    @productclasses = Productclass.where("lft < ? OR rgt > ?", @productclass.parent ? @productclass.parent.lft : @productclass.lft, @productclass.parent ? @productclass.parent.rgt : @productclass.rgt).order('lft ASC').all
+    
+  end
+
+  def update
+    @productclass = Productclass.find(params[:id])
+    if(params[:productclass][:parent_id] == "0")
+      params[:productclass].delete(:parent_id)
+    end
+    respond_to do |format|
+      if @productclass.update_attributes(params[:productclass])
+        format.html { redirect_to admin_productclasses_path }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @productclass.errors, status: :unprocessable_entity }
+      end
+    end
+    
+  end
+
+  def destroy
+    @productclass = Productclass.find(params[:id])
+    @productclass.destroy
+    respond_to do |format|
+      format.html { redirect_to admin_productclasses_path }
+    end
+  end
+
+  def select
+    if(params[:id].to_i == 0)
+      @productclass = Productclass.new
+      @children = Productclass.roots
+    else
+      @productclass = Productclass.find(params[:id])
+      @parent = @productclass.parent
+      @children = @productclass.children
+    end
+
+    respond_to do |format|      
+      format.js
+    end
+    
   end
 
 end
