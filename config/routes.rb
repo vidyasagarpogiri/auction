@@ -98,7 +98,11 @@ Auction::Application.routes.draw do
       end
     end
 
-    resources :productclasses
+    resources :productclasses do
+      member do
+        get "select"
+      end
+    end
 
     root :to => "users#index"
   end

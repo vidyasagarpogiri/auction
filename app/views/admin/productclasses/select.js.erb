@@ -1,0 +1,23 @@
+$("#cate_path span").each(function(){
+	if(<%= @productclass.depth ? true : false %> && $(this).data("depth") >= <%= @productclass.depth || 0 %>){
+		$(this).remove();
+	}
+});
+
+if(<%= @productclass.depth ? true : false %>){
+	$("#cate_path").html($("#cate_path").html()+"<span data-depth='<%= @productclass.depth %>'> > <%= @productclass.name %><span>");
+}
+else{
+	$("#cate_path span").remove();
+}
+
+var children_html = new String();
+children_html += '<%= link_to("回上一層", select_admin_productclass_path(@parent || 0), :remote => true) if @productclass.depth %> ';
+
+<% @children.each do |child| %>
+children_html += '<%= link_to child.name, select_admin_productclass_path(child), :remote => true %> '
+<% end %>
+
+$("#cate_children").html(children_html);
+
+$("#productclass_parent_id").val("<%= @productclass.id %>");
