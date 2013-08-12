@@ -5,16 +5,16 @@
 		<span> > <%= parent.name %> </span>
 	<% end %>
 </p>
-	<%= nested_li(@productclass.children) do |productclass| %>
-		<%= productclass.name %>
+	<%= nested_li(@productclass.children.order("lft ASC")) do |productclass| %>
+		<%= productclass.name %> <%= link_to "↑", move_left_admin_productclasses_path(productclass), :method => "post" if(productclass.left_sibling) %> <%= link_to "↓", move_right_admin_productclasses_path(productclass), :method => "post" if(productclass.right_sibling) %>
 	<% end %>
 
 	<%= link_to "編輯分類", edit_admin_productclass_path(@productclass) %>｜<%= link_to "刪除分類", admin_productclass_path(@productclass), :method => "delete", :data => { :confirm => "確定刪除？" } %>｜<%= link_to "新增子分類", addsub_admin_productclass_path(@productclass) %>
 
 <% else %>
 <p>分類名稱：root</p>
-	<%= nested_li(Productclass.roots) do |productclass| %>
-		<%= productclass.name %>
+	<%= nested_li(Productclass.roots.order("lft ASC")) do |productclass| %>
+		<%= productclass.name %> <%= link_to "↑", move_left_admin_productclasses_path(productclass), :method => "post" if(productclass.left_sibling) %> <%= link_to "↓", move_right_admin_productclasses_path(productclass), :method => "post" if(productclass.right_sibling) %>
 	<% end %>
 	<%= link_to "新增子分類", addsub_admin_productclass_path(0) %>
 <% end %>

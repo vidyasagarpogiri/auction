@@ -58,6 +58,7 @@ class Admin::ProductclassesController < AdminController
   def destroy
     @productclass = Productclass.find(params[:id])
     @productclass.destroy
+    
     respond_to do |format|
       format.html { redirect_to admin_productclasses_path }
     end
@@ -75,6 +76,26 @@ class Admin::ProductclassesController < AdminController
 
     respond_to do |format|      
       format.js
+    end
+    
+  end
+
+  def move_left
+    @productclass = Productclass.find(params[:id])
+    @productclass.move_to_left_of(@productclass.left_sibling)
+
+    respond_to do |format|
+      format.html { redirect_to :back }
+    end
+    
+  end
+
+  def move_right
+    @productclass = Productclass.find(params[:id])
+    @productclass.move_to_right_of(@productclass.right_sibling)
+
+    respond_to do |format|
+      format.html { redirect_to :back }
     end
     
   end

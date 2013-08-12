@@ -99,6 +99,10 @@ Auction::Application.routes.draw do
     end
 
     resources :productclasses do
+      collection do
+        match "move_left/:id" => "productclasses#move_left", :as => "move_left", :via => :post
+        match "move_right/:id" => "productclasses#move_right", :as => "move_right", :via => :post
+      end
       member do
         get "select"
         get "addsub"
