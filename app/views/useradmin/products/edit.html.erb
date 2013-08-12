@@ -1,6 +1,17 @@
 <h1>編輯商品</h1>
 
 <%= form_for(@product, :url => useradmin_product_path(@product)) do |f| %>
+  <div class="field">
+    分類位置：<p style="display: inline;" id="cate_path"></p><br>
+    請選擇分類：
+    <p style="display: inline;" id="cate_children">
+      <% Productclass.roots.each do |root_cate| %>
+        <%= link_to root_cate.name, selectclass_useradmin_products_path(root_cate), :remote => true %>
+      <% end %>
+    </p><br>
+
+    <%= f.hidden_field :productclass_id %>
+  </div>
 	<div class="field">
     <%= f.label :name, "商品名稱" %><br />
     <%= f.text_field :name %>

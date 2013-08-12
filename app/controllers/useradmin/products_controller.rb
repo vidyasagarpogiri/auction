@@ -115,4 +115,20 @@ class Useradmin::ProductsController < ApplicationController
     end
     
   end
+
+  def selectclass
+    if(params[:class_id].to_i == 0)
+      @productclass = Productclass.new
+      @children = Productclass.roots
+    else
+      @productclass = Productclass.find(params[:class_id])
+      @parent = @productclass.parent
+      @children = @productclass.children
+    end
+
+    respond_to do |format|      
+      format.js
+    end
+    
+  end
 end

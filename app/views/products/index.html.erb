@@ -5,6 +5,26 @@
 	<% end %>
 </div>
 
+<% if(params[:cate]) %>
+<p>
+	分類位置：<%= link_to "網站", url_for(params.except(:controller, :action).merge(:cate => nil)) %>
+	<% @cate.ancestors.each do |ancestor| %>
+	 > <%= link_to ancestor.name, url_for(params.except(:controller, :action).merge(:cate => ancestor.id)) %>
+	<% end %>
+	 > <%= @cate.name %>
+</p>
+
+	<% @cate.children.each do |child| %>
+		<%= link_to child.name, url_for(params.except(:controller, :action).merge(:cate => child.id)) %>|
+	<% end %>
+<% else %>
+<div>
+	<% @root_cates.each do |cate| %>
+		<%= link_to cate.name, url_for(params.except(:controller, :action).merge(:cate => cate.id)) %> |
+	<% end %>
+</div>
+<% end %>
+
 <% if params[:query] && params[:query].length > 0 %>
 <div>" <%= params[:query] %> "的搜尋結果</div>
 <% end %>
@@ -22,6 +42,7 @@
 		<%= hidden_field_tag(:create, params[:create]) if params[:create] %>
 		<%= hidden_field_tag(:price, params[:price]) if params[:price] %>
 		<%= hidden_field_tag(:region, params[:region]) if params[:region] %>
+		<%= hidden_field_tag(:cate, params[:cate]) if params[:cate] %>
 		<%= submit_tag("送出") %>
 	<% end %>
 	</p>

@@ -13,12 +13,26 @@ class ProductsController < ApplicationController
       end
     end
 
-    @querystring = "status = '上架' and name like '%#{params[:query]}%'" + ( @region ? "and region = '#{@region}'" : "" ) + ( (params[:pricemax] && params[:pricemax].length > 0) ? "and price <= '#{params[:pricemax]}'" : "" ) + ( (params[:pricemin] && params[:pricemin].length > 0) ? "and price >= '#{params[:pricemin]}'" : "" )
+    if(params[:cate])
+      begin
+        @cate = Productclass.find(params[:cate])
+      rescue
+        params[:cate] = nil
+        @root_cates = Productclass.roots
+      end
+    else
+      @root_cates = Productclass.roots
+    end
+
+    @querystring = "products.status = '上架' and products.name like '%#{params[:query]}%'" 
+    @querystring += ( @region ? "and products.region = '#{@region}'" : "" ) 
+    @querystring += ( (params[:pricemax] && params[:pricemax].length > 0) ? "and products.price <= '#{params[:pricemax]}'" : "" ) 
+    @querystring += ( (params[:pricemin] && params[:pricemin].length > 0) ? "and products.price >= '#{params[:pricemin]}'" : "" )
 
     if(params[:price])
-      @products = Product.where(@querystring).order("price #{params[:price] == 'DESC' ? 'DESC' : 'ASC' }").all
+      @products = Product.select("products.*, productclasses.lft, productclasses.rgt, productclasses.name as classname").joins("INNER JOIN productclasses ON products.productclass_id = productclasses.id").where(@querystring).order("products.price #{params[:price] == 'DESC' ? 'DESC' : 'ASC' }").all
     else
-      @products = Product.where(@querystring).order("created_at #{params[:create] == 'ASC' ? 'ASC' : 'DESC' }").all
+      @products = Product.select("products.*, productclasses.lft, productclasses.rgt, productclasses.name as classname").joins("INNER JOIN productclasses ON products.productclass_id = productclasses.id").where(@querystring).order("products.created_at #{params[:create] == 'ASC' ? 'ASC' : 'DESC' }").all
     end
 
     respond_to do |format|

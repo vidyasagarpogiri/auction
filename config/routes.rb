@@ -31,6 +31,9 @@ Auction::Application.routes.draw do
         match "enable", :via => :post
         match "disable", :via => :post
       end
+      collection do
+        get "selectclass/:class_id" => "products#selectclass", :as => "selectclass"
+      end
     end
     
     resources :productasks, :only => [:index, :show] do

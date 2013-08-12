@@ -1,8 +1,8 @@
 #encoding: utf-8
 class Product < ActiveRecord::Base
-  attr_accessible :cover, :description, :name, :price, :amount, :region, :shippingway
+  attr_accessible :cover, :description, :name, :price, :amount, :region, :shippingway, :productclass_id
 
-  validates :name, :price, :amount, :presence => true, :if => :is_available
+  validates :name, :price, :amount, :productclass_id, :presence => true, :if => :is_available
   validates :name, uniqueness: true
 
   before_create :generate_productnum

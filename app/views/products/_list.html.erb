@@ -17,6 +17,7 @@
 			<% end %>
 		</th>
 		<th>所在地</th>
+		<th>分類</th>
 	</tr>
 	<% @products.each do |product| %>
 	<tr>
@@ -25,6 +26,7 @@
 		<td><%= link_to product.name, product_path(product) %></td>
 		<td><%= product.price %></td>
 		<td><%= product.region %></td>
+		<td><%= product.classname %></td>
 	</tr>
 	<% end %>
 </table>
