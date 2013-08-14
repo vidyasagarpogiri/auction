@@ -28,13 +28,10 @@ class ProductsController < ApplicationController
     @querystring += ( @region ? "and products.region = '#{@region}'" : "" ) 
     @querystring += ( (params[:pricemax] && params[:pricemax].length > 0) ? "and products.price <= '#{params[:pricemax]}'" : "" ) 
     @querystring += ( (params[:pricemin] && params[:pricemin].length > 0) ? "and products.price >= '#{params[:pricemin]}'" : "" )
+    @querystring += ( @cate ? "and productclasses.lft >= '#{@cate.lft}' and productclasses.rgt <= '#{@cate.rgt}'" : "" ) 
 
-    if(params[:price])
-      @products = Product.select("products.*, productclasses.lft, productclasses.rgt, productclasses.name as classname").joins("INNER JOIN productclasses ON products.productclass_id = productclasses.id").where(@querystring).order("products.price #{params[:price] == 'DESC' ? 'DESC' : 'ASC' }").all
-    else
-      @products = Product.select("products.*, productclasses.lft, productclasses.rgt, productclasses.name as classname").joins("INNER JOIN productclasses ON products.productclass_id = productclasses.id").where(@querystring).order("products.created_at #{params[:create] == 'ASC' ? 'ASC' : 'DESC' }").all
-    end
-
+    @products = Product.select("products.*, productclasses.lft, productclasses.rgt, productclasses.name as classname").joins("INNER JOIN productclasses ON products.productclass_id = productclasses.id").where(@querystring).order(params[:price] ? "products.price #{params[:price] == 'DESC' ? 'DESC' : 'ASC' }" : "products.created_at #{params[:create] == 'ASC' ? 'ASC' : 'DESC' }").all
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @products }

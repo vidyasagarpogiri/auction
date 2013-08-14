@@ -92,7 +92,14 @@ Auction::Application.routes.draw do
     get "login", "logout"
     match "checkAdmin", :via => :post
 
-    resources :users, :only => [:index, :show]
+    resources :users, :only => [:index, :show] do
+      collection do
+        match "search", :via => :post
+      end
+      member do
+        match "restrict", :via => :post
+      end
+    end
 
     resources :products, :only => [:index, :show] do
       member do

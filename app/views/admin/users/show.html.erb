@@ -1,0 +1,83 @@
+<% if @user %>
+<div>
+	<p>會員姓名：<%= @user.name %></p>
+	<p>email：<%= @user.email %></p>
+	<p>電話：<%= @user.tel %></p>
+	<p>加入日期：<%= @user.created_at.strftime("%Y-%m-%d") %></p>
+	<p>狀態：<%= @user.status %> <%= (@user.status == "正常") ? (link_to "將會員停權", "", :id => "restrict_user") : (link_to "恢復權限", "", :id => "restrict_user") %></p>
+	<p>最近登入時間：<%= @user.current_sign_in_at ? @user.current_sign_in_at.strftime("%Y-%m-%d %H:%M") : "沒有登入記錄" %></p>
+	<p>最近登入ip：<%= @user.current_sign_in_ip || "沒有登入記錄" %></p>
+</div>
+
+<br>
+
+	<% if @user_products.length > 0 %>
+	<div>
+		<p>商品列表</p>
+		<% @user_products.each do |product| %>
+		<div>
+			<p><%= product.created_at.strftime("%Y-%m-%d") %></p>
+			<p><%= product.cover ? image_tag(product.cover) : "尚未上傳商品圖" %></p>
+			<p>商品名稱：<%= link_to product.name, admin_product_path(product) %></p>
+			<p>編號：<%= product.serialnum %></p>
+			<p>狀態：<%= product.status %></p>
+			<p></p>
+		</div>
+		<% end %>
+	</div>
+	<% else %>
+		<p>會員尚未建立商品。</p>
+	<% end %>
+<br>
+	<% if @user_statusLogs.length > 0 %>
+	<div>
+		<p>停權紀錄</p>
+		<% @user_statusLogs.each do |statusLog| %>
+		<div>
+			<p><%= statusLog.created_at.strftime("%Y-%m-%d %H:%M") %></p>
+			<p>狀態變更為：<%= statusLog.status %></p>
+			<p>原因：<%= simple_format(statusLog.reason) %></p>
+			<p></p>
+		</div>
+		<% end %>
+	</div>
+	<% end %>
+
+<div id="dialog-form" title="變更會員權限">
+	<%= form_for(@statusLog, :url => restrict_admin_user_path(@user)) do |f| %>
+	<p>將會員權限變更為：<%= (@user.status == "正常") ? "停權" : "正常" %></p>
+	變更原因：<br>
+	<%= f.text_area :reason, :rows => 5 %><br>
+	<%= f.submit "確定送出" %>
+	<% end %>
+</div>
+
+<script type="text/javascript">
+
+$( "#dialog-form" ).dialog({
+      autoOpen: false,
+      width: 460,
+      modal: true,
+      resizable: false,
+      draggable: false,
+      buttons: {
+        Cancel: function() {
+          $( this ).dialog( "close" );
+        }
+      },
+      close: function() {
+        //do something when close
+      }
+    });
+
+$( "#restrict_user" )
+      .click(function(e) {
+      	e.preventDefault();
+        $( "#dialog-form" ).dialog( "open" );
+      });
+</script>
+
+<% else %>
+<p>該會員不存在。</p>
+<% end %>
+

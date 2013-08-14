@@ -1,4 +1,7 @@
 <% if @users.length > 0 %>
+<%= form_for(@user, :url => search_admin_users_path) do |f| %>
+<%= f.text_field :name %> <%= f.submit "搜尋使用者" %>
+<% end %>
 <table>
 	<tr>
 		<th>加入會員日期</th>
@@ -11,7 +14,7 @@
 	<% @users.each do |user| %>
 	<tr>
 		<td><%= user.created_at.strftime("%Y-%m-%d") %></td>
-		<td><%= user.name %></td>
+		<td><%= link_to user.name, admin_user_path(user.name) %></td>
 		<td><%= user.email %></td>
 		<td><%= user.status || "正常" %></td>
 		<td><%= user.current_sign_in_at ? user.current_sign_in_at.strftime("%Y-%m-%d %H:%M") : "沒有登入記錄" %></td>
@@ -24,3 +27,9 @@
 <p>沒有任何會員。</p>
 
 <% end %>
+
+<script type="text/javascript">
+if("<%= alert %>"){
+	alert("<%= alert %>");
+}
+</script>
