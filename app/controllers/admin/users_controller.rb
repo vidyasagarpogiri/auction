@@ -1,15 +1,19 @@
 #encoding: utf-8
 class Admin::UsersController < AdminController
   def index
-    @users = User.order("created_at DESC").all
+    @users = User.order("created_at DESC").where("status = ?", ( params[:restrict] && params[:restrict] == "true" ) ? "停權" : "正常" ).all
     @user = User.new
   end
 
   def search
-  	@user = User.where("name like '%#{params[:user][:name]}%'").first
+    respond_to do |format|
+      if(!params[:user][:name] || params[:user][:name].length == 0)
+        format.html { redirect_to admin_users_path }
+      end
 
-  	respond_to do |format|
-  		if(@user)
+      @user = User.where("name like '#{params[:user][:name]}'").first
+
+      if(@user)
   			format.html { redirect_to admin_user_path(@user.name) }
   		else
   			format.html { redirect_to admin_users_path, alert: "找不到會員：#{params[:user][:name]}" }
@@ -31,15 +35,15 @@ class Admin::UsersController < AdminController
 
     if (@user.status == "正常")
       @statusLog.status = "停權"
-      @product_new_status = "鎖定"
+      @product_lock = true
     else
       @statusLog.status = "正常"
-      @product_new_status = "上架"
+      @product_lock = false
     end
 
     if(@statusLog.save)
       #block all user's products
-      @user.products.update_all(status: @product_new_status)
+      @user.products.update_all(lock: @product_lock)
       @user.update_attribute(:status ,@statusLog.status)
     end
 

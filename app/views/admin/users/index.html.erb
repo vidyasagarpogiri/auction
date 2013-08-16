@@ -2,6 +2,7 @@
 <%= form_for(@user, :url => search_admin_users_path) do |f| %>
 <%= f.text_field :name %> <%= f.submit "搜尋使用者" %>
 <% end %>
+<p>會員權限：<%= link_to "正常", url_for( :restrict => false ) %>｜<%= link_to "停權", url_for( :restrict => true ) %></p>
 <table>
 	<tr>
 		<th>加入會員日期</th>
@@ -22,6 +23,7 @@
 	</tr>
 	<% end %>
 </table>
+
 <% else %>
 
 <p>沒有任何會員。</p>

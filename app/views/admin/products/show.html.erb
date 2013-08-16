@@ -1,0 +1,28 @@
+<% if @product %>
+<p><%= @product.name %></p>
+<p>
+	賣家資訊：<%= link_to @product.username, admin_user_path(@product.username) %>
+</p>
+<p>
+  價格：$ <%= @product.price %><br>
+  物品所在地:<%= @product.region %><br>
+  運送方式:<%= @product.shippingway %><br>
+
+  <% if @product.amount %>
+  	<p>庫存 <%= @product.amount %></p>
+  <% end %>
+
+  <p>狀態：<%= @product.lock ? "鎖定" : @product.status %> 
+  	<%= @product.lock ? (link_to "解除鎖定", unlock_admin_products_path(:id => @product.id), :method => :post ) : (link_to "鎖定商品", unlock_admin_products_path(:id => @product.id), :method => :post ) %>
+  </p>
+</p>
+<input id="article_content" style="display:none;" type="text" value="<%= @product.description %>">
+<div id="articleContent"></div>
+
+
+<script type="text/javascript">
+editor.output();
+</script>
+<% else %>
+<p>找不到該商品。</p>
+<% end %>

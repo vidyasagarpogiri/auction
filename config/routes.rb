@@ -102,9 +102,9 @@ Auction::Application.routes.draw do
     end
 
     resources :products, :only => [:index, :show] do
-      member do
-        match "enable", :via => :post
-        match "disable", :via => :post
+      collection do
+        match "lock", :via => :post
+        match "unlock", :via => :post
       end
     end
 

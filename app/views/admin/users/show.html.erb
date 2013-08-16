@@ -4,7 +4,7 @@
 	<p>email：<%= @user.email %></p>
 	<p>電話：<%= @user.tel %></p>
 	<p>加入日期：<%= @user.created_at.strftime("%Y-%m-%d") %></p>
-	<p>狀態：<%= @user.status %> <%= (@user.status == "正常") ? (link_to "將會員停權", "", :id => "restrict_user") : (link_to "恢復權限", "", :id => "restrict_user") %></p>
+	<p>狀態：<%= @user.status %> <%= link_to ( (@user.status == "正常") ? "將會員停權" : "恢復權限" ), "", :id => "restrict_user" %></p>
 	<p>最近登入時間：<%= @user.current_sign_in_at ? @user.current_sign_in_at.strftime("%Y-%m-%d %H:%M") : "沒有登入記錄" %></p>
 	<p>最近登入ip：<%= @user.current_sign_in_ip || "沒有登入記錄" %></p>
 </div>
@@ -20,7 +20,7 @@
 			<p><%= product.cover ? image_tag(product.cover) : "尚未上傳商品圖" %></p>
 			<p>商品名稱：<%= link_to product.name, admin_product_path(product) %></p>
 			<p>編號：<%= product.serialnum %></p>
-			<p>狀態：<%= product.status %></p>
+			<p>狀態：<%= product.lock ? "鎖定" : product.status %> </p>
 			<p></p>
 		</div>
 		<% end %>
