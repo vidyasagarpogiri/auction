@@ -49,6 +49,7 @@ class Admin::UsersController < AdminController
 
     respond_to do |format|
       format.html { redirect_to admin_user_path(@user.name) }
+      format.js
     end
     
   end

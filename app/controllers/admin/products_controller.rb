@@ -13,7 +13,6 @@ class Admin::ProductsController < AdminController
 
     @products = Product.select("products.*, users.name as username").joins("INNER JOIN users ON products.user_id = users.id").where(@querystring, (params[:lock] == "true" ? true : false) ).order("products.created_at DESC").all
     @product = Product.new
-    
   end
 
   def show
@@ -34,13 +33,15 @@ class Admin::ProductsController < AdminController
       else
       	format.html { redirect_to admin_products_path, alert: "找不到會員：#{params[:product][:serialnum]}" }
       end
-  	end
-  	
+  	end  	
   end
 
-  def unlock
-    return render :text => params[:id]
-    
+  def lock
+    @products = Product.where(:id => params[:locklist]).update_all(:lock => (params[:lock] == "true" ? false : true ) )
+
+    respond_to do |format|
+      format.html { redirect_to admin_products_path }
+    end
   end
 
 end

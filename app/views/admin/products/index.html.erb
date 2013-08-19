@@ -16,32 +16,37 @@
 <p>商品狀態：<%= link_to "正常", url_for( params.merge( :lock => false ) ) %>｜<%= link_to "鎖定", url_for( params.merge( :lock => true ) ) %></p>
 
 <% if @products.length > 0 %>
-<table>
-	<tr>
-		<th></th>
-		<th>上架日期</th>
-		<th>上傳者</th>
-		<th>商品編號</th>
-		<th>商品</th>
-		<th>名稱</th>
-		<th>價格</th>
-		<th>所在地</th>
-		<th>狀態</th>
-	</tr>
-	<% @products.each do |product| %>
-	<tr>
-		<td></td>
-		<td><%= product.created_at.strftime("%Y-%m-%d") %></td>
-		<td><%= product.username %></td>
-		<td><%= product.serialnum %></td>
-		<td><%= product.cover ? image_tag(product.cover) : "無圖片" %></td>
-		<td><%= link_to product.name, admin_product_path(product) %></td>
-		<td><%= product.price %></td>
-		<td><%= product.region %></td>
-		<td><%= product.lock ? "鎖定" : product.status %></td>
-	</tr>
-	<% end %>
-</table>
+<form accept-charset="UTF-8" action="/admin/products/lock" method="post">
+	<input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+	<table>
+		<tr>
+			<th><input type="checkbox" id="selectAll">全選</th>
+			<th>上架日期</th>
+			<th>上傳者</th>
+			<th>商品編號</th>
+			<th>商品</th>
+			<th>名稱</th>
+			<th>價格</th>
+			<th>所在地</th>
+			<th>狀態</th>
+		</tr>
+		<% @products.each do |product| %>
+		<tr>
+			<td><input type="checkbox" class="product_lock" name="locklist[]" value="<%= product.id %>"></td>
+			<td><%= product.created_at.strftime("%Y-%m-%d") %></td>
+			<td><%= product.username %></td>
+			<td><%= product.serialnum %></td>
+			<td><%= product.cover ? image_tag(product.cover) : "無圖片" %></td>
+			<td><%= link_to product.name, admin_product_path(product) %></td>
+			<td><%= product.price %></td>
+			<td><%= product.region %></td>
+			<td><%= product.lock ? "鎖定" : product.status %></td>
+		</tr>
+		<% end %>
+	</table>
+	<input type="hidden" name="lock" value="<%= params[:lock] || false %>" >
+	<input type="submit" value="鎖定選擇的商品">
+</form>
 <% else %>
 
 <p>沒有任何上架商品。</p>
@@ -52,4 +57,11 @@
 if("<%= alert %>"){
 	alert("<%= alert %>");
 }
+$("#selectAll").click(function(){
+	var isChecked = $(this).is(":checked");
+	$(".product_lock").each(function(){
+		$(this).prop("checked", isChecked);
+	});
+
+});
 </script>
