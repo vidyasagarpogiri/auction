@@ -14,8 +14,10 @@
   訂購數量：<br/>
   <%= f.hidden_field :product_id, :value => params[:id] %>
   <% if @product.lock %>
-
   <p>無法下標已鎖定的商品。</p>
+
+  <%elsif current_user && current_user.status != "正常" %>
+  <p>停權中無法購買。</p>
 
   <% else %>
   <%= f.text_field :amount %>
@@ -39,13 +41,15 @@
 	<% end %>
 	<% end %>
 
-	<% if current_user && !@product.lock %>
+	<% if current_user && current_user.status == "正常" && !@product.lock %>
 	<%= form_for(@productask, :url => ask_product_path(params[:id])) do |f| %>
 	<p>提問</p>
 	<%= f.text_area :content, :rows => "5" %><br>
 	<%= f.submit "提問" %>
 	<% end %>
-	
+
+	<% elsif current_user && current_user.status != "正常" %>
+	<p>停權中無法發問。</p>
 	<% elsif @product.lock %>
 	<p>無法對已鎖定的商品提問。</p>
 	<% else %>
