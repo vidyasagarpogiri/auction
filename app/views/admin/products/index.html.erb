@@ -1,18 +1,21 @@
-<% if @products.length > 0 %>
-
 <div>
 	<%= form_tag(admin_products_path, :method => :get) do %>
 		<%= text_field_tag(:query, nil, :placeholder => "搜尋商品名稱或產品編號" ) %>
+		<%= hidden_field_tag(:lock, params[:lock]) if params[:lock] %>
 		<%= submit_tag("搜尋商品") %>
 	<% end %>
 </div>
 
 <% if params[:query] && params[:query].length > 0 %>
-<div>" <%= params[:query] %> "的搜尋結果。</div>
+<div>
+	" <%= params[:query] %> "的搜尋結果。<br>
+	<%= link_to "所有商品", url_for(params.except(:controller, :action).merge(:query => nil)) %>
+</div>
 <% end %>
 
-<p>商品狀態：<%= link_to "正常", url_for( params.merge( :restrict => false ) ) %>｜<%= link_to "鎖定", url_for( params.merge( :restrict => true ) ) %></p>
+<p>商品狀態：<%= link_to "正常", url_for( params.merge( :lock => false ) ) %>｜<%= link_to "鎖定", url_for( params.merge( :lock => true ) ) %></p>
 
+<% if @products.length > 0 %>
 <table>
 	<tr>
 		<th></th>

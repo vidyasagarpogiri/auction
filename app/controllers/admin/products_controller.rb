@@ -5,12 +5,15 @@ class Admin::ProductsController < AdminController
       params[:query] = params[:query].gsub(/[\/]+/, '')
     end
 
-    @querystring = "products.name like '%#{params[:query]}%' OR products.serialnum = '#{params[:query]}' " 
+    @querystring = "products.lock = ? "
+    
+    if(params[:query] && params[:query].length > 0)
+      @querystring += " and products.name like '%#{params[:query]}%' OR products.serialnum = '#{params[:query]}' "
+    end
 
-    @products = Product.select("products.*, users.name as username").joins("INNER JOIN users ON products.user_id = users.id").where(@querystring).order("products.created_at DESC").all
+    @products = Product.select("products.*, users.name as username").joins("INNER JOIN users ON products.user_id = users.id").where(@querystring, (params[:lock] == "true" ? true : false) ).order("products.created_at DESC").all
     @product = Product.new
-
-    # .where("lock = ?", ( params[:restrict] == "true" ? true : false) )
+    
   end
 
   def show

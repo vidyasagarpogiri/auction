@@ -1,6 +1,12 @@
 <div>
 	<%= form_tag(products_path, :method => :get) do %>
 		<%= text_field_tag(:query) %>
+		<%= hidden_field_tag(:create, params[:create]) if params[:create] %>
+		<%= hidden_field_tag(:price, params[:price]) if params[:price] %>
+		<%= hidden_field_tag(:region, params[:region]) if params[:region] %>
+		<%= hidden_field_tag(:cate, params[:cate]) if params[:cate] %>
+		<%= hidden_field_tag(:pricemax, params[:pricemax]) if params[:pricemax] %>
+		<%= hidden_field_tag(:pricemin, params[:pricemin]) if params[:pricemin] %>
 		<%= submit_tag("搜尋商品") %>
 	<% end %>
 </div>
