@@ -1,0 +1,41 @@
+<%= link_to "未讀", url_for(:isread => false) %>｜<%= link_to "已讀", url_for(:isread => true) %>
+<table>
+	<tr>
+		<th>訊息日期</th>
+		<th>分類</th>
+		<th>訊息提示</th>
+	</tr>
+	<% @msgs.each do |msg| %>
+	<tr>
+		<td>
+			<% @created_at = msg["created_at"].is_a?(String) ? DateTime.parse(msg["created_at"]) : msg["created_at"] %>
+			<%= @created_at.strftime("%Y-%m-%d %H:%M") %>
+		</td>
+		<td><%= msg["class"] %></td>
+		<td>
+			<% case msg["type"] %>
+			<% when "productask" %>
+				<% @linkname = '商品 '+msg["productname"]+' 有新的發問。' %>
+
+			<% when "deal" %>
+				<% @linkname = '新交易來自 '+msg["username"]+'，交易編號'+msg["ordernum"]+'。' %>
+				
+			<% when "dealask" %>
+				<% @linkname = '交易編號 '+msg["ordernum"]+' ：有新留言。' %>
+				
+			<% when "dealvalue" %>
+				<% @linkname = '交易編號 '+msg["ordernum"]+' ：有新評價。' %>
+				
+			<% when "myask" %>
+				<% @linkname = '賣家回覆你對商品  '+msg["productname"]+'  的發問。' %>
+				
+			<% when "deallog" %>
+				<% @linkname = '交易編號 '+msg["ordernum"]+' ：狀態變更。' %>
+				
+			<% end %>
+
+			<%= link_to @linkname ,check_useradmin_messages_path(msg["type"], msg["id"]), :method => :post %>
+		</td>
+	</tr>
+	<% end %>
+</table>

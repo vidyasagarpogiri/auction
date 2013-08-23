@@ -25,8 +25,8 @@ Auction::Application.routes.draw do
   namespace :useradmin do
     resources :products, :except => [:new] do
       member do
-        match 'uploadPhoto' => 'products#createPhoto', :via => [:post]
-        match 'deletePhoto/:photo_id' => 'products#destroyPhoto', :via => [:delete]
+        match 'uploadPhoto' => 'products#createPhoto', :via => :post
+        match 'deletePhoto/:photo_id' => 'products#destroyPhoto', :via => :delete
 
         match "enable", :via => :post
         match "disable", :via => :post
@@ -78,14 +78,20 @@ Auction::Application.routes.draw do
         get "aboutme/edit" => "users#aboutme_edit"
         match "aboutme/update" => "users#aboutme_update", :via => :put
 
-        match 'aboutme/uploadPhoto' => 'users#createPhoto', :via => [:post]
-        match 'aboutme/deletePhoto/:id' => 'users#destroyPhoto', :via => [:delete]
+        match 'aboutme/uploadPhoto' => 'users#createPhoto', :via => :post
+        match 'aboutme/deletePhoto/:id' => 'users#destroyPhoto', :via => :delete
 
         resources :blacklists, :only => [:index, :create, :destroy]
       end
     end
 
-    root :to => "root#index"
+    resources :messages, :only => [:index] do
+      collection do
+        match ":type/:id" => "messages#checked", :via => :post, :as => "check"
+      end
+    end
+
+    root :to => "messages#index"
   end
 
   namespace :admin do
