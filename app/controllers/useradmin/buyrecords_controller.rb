@@ -32,6 +32,10 @@ class Useradmin::BuyrecordsController < ApplicationController
   	@dealask.deal_id = params[:id]
   	@dealask.save
 
+    @deal = Deal.find(params[:id])
+
+    Sendmail.dealask_new(User.find(@deal.seller_id).email, @deal, @dealask)
+
   	respond_to do |format|
       format.html { redirect_to useradmin_buyrecord_path(params[:id]) }
       format.json { render json: @dealask }
@@ -57,10 +61,28 @@ class Useradmin::BuyrecordsController < ApplicationController
   end
 
   def count_buyrecords
-    @countnew = Deal.where("buyer_id = ? AND status = ?", current_user.id, "new").count
-    @countcheck = Deal.where("buyer_id = ? AND status = ?", current_user.id, "check").count
-    @countprocessing = Deal.where("buyer_id = ? AND status = ?", current_user.id, "processing").count
-    @countdeliver = Deal.where("buyer_id = ? AND status = ?", current_user.id, "deliver").count
-    @countcancel = Deal.where("buyer_id = ? AND status = ?", current_user.id, "cancel").count
+    @deals = Deal.where("buyer_id = ?", current_user.id).all
+
+    @countnew = 0
+    @countcheck = 0
+    @countprocessing = 0
+    @countdeliver = 0
+    @countcancel = 0
+    
+    @deals.each do |deal|
+      case deal.status
+        when "new"
+          @countnew++
+        when "check"
+          @countcheck++
+        when "processing"
+          @countprocessing++
+        when "deliver"
+          @countdeliver++
+        when "cancel"
+          @countcancel++
+      end
+        
+    end
   end
 end

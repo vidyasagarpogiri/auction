@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+</head>
+<body>
+	<p>您好，您有新訂單成立，請登入使用者後台查看詳細資料。</p>
+
+<p>訂單日期：<%= @deal.created_at.strftime("%Y-%m-%d %H:%M") %></p>
+<p>訂單編號：<%= @deal.serialnum %></p>
+<p>購買人：<%= @deal.buyername %></p>
+<p>電話：<%= @deal.buyertel %></p>
+
+<p><%= @deal.productname %></p>
+<p>數量：<%= @deal.amount %></p>
+
+<%= simple_format( (@product.accountinfo && @product.accountinfo.length > 0) ? @product.accountinfo : "未提供" ) %>
+
+</body>
+</html>

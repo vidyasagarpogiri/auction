@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+</head>
+<body>
+<p>您好，賣家回答了您對商品#{ @productaskre.productname }的發問</p>
+<p>您的問題</p>
+<%= simple_format( @productask.content ) %>
+<p>賣家的回覆</p>
+<%= simple_format( @productaskre.content ) %>
+
+<p>詳細內容請登入使用者後台查看。</p>
+</body>
+</html>

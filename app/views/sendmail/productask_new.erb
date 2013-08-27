@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+</head>
+<body>
+<p>您上架的商品 #{ @productname } 有新提問，請登入回覆此問題。</p>
+<p>問題內容
+	<%= simple_format( @productask.content ) %>
+</p>
+<p>詳細內容請登入使用者後台查看。</p>
+</body>
+</html>

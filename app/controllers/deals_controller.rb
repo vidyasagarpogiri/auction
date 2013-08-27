@@ -38,6 +38,9 @@ class DealsController < ApplicationController
           @product.amount = @product.amount - @deal.amount
           @product.save
         end
+
+        Sendmail.deal_new(current_user.email, @product, @deal)
+
         format.html { redirect_to  finish_deals_path }
         format.json { render json: @deal }
       else
@@ -48,7 +51,7 @@ class DealsController < ApplicationController
   end
 
   def find_product
-    @product = Product.find(params[:deal][:product_id])    
+    @product = Product.select("products.*, users.name as username, users.email as useremail, users.accountinfo").joins("users ON products.user_id = users.id").find(params[:deal][:product_id])    
   end
 
   def check_stock

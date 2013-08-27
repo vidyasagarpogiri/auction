@@ -32,6 +32,10 @@ class Useradmin::DealsController < ApplicationController
   	@dealask.deal_id = params[:id]
   	@dealask.save
 
+    @deal = Deal.find(params[:id])
+
+    Sendmail.dealask_new(User.find(@deal.buyer_id).email, @deal, @dealask)
+
   	respond_to do |format|
       format.html { redirect_to useradmin_deal_path(params[:id]) }
       format.json { render json: @dealask }

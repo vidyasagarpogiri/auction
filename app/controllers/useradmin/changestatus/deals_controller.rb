@@ -73,10 +73,10 @@ class Useradmin::Changestatus::DealsController < ApplicationController
     @deallog.description = "訂單變更狀態為：" + status
     @deallog.save
 
-    #dealmailer.delay.statuschange(Member.find(@deal.buyer_id).email, @deal)
+    Sendmail.deal_status_change(@deal.buyeremail, @deal)
   end
   
   def find_deal
-  	@deal = Deal.find(params[:deal_id])  	
+  	@deal = Deal.select("deal.*, users.email as buyeremail").joins("INNER JOIN users ON deal.buyer_id = users.id").find(params[:deal_id])  	
   end
 end

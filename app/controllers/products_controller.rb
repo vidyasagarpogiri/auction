@@ -39,7 +39,7 @@ class ProductsController < ApplicationController
   end
 
   def show
-    @product = Product.where(:status => "上架", :id => params[:id]).select("products.*, users.name as username").joins("left join users on users.id = products.user_id").first
+    @product = Product.where(:status => "上架", :id => params[:id]).select("products.*, users.name as username").joins("left join users on users.id = products.user_id").includes(productasks: [:productaskres]).first
     @productask = Productask.new
     @deal = Deal.new
 
@@ -54,9 +54,13 @@ class ProductsController < ApplicationController
     @productask.product_id = params[:id]
     @productask.user_id = current_user.id
 
-    @product = Product.where(:status => "上架", :id => params[:id]).select("products.*, users.name as username").joins("left join users on users.id = products.user_id").first
+    @product = Product.where(:status => "上架", :id => params[:id]).select("products.*, users.name as username, users.email as useremail").joins("left join users on users.id = products.user_id").first
 
     if(@product.user_id != current_user.id && @productask.save)
+
+      #send email to product owner
+      Sendmail.productask_new(@product.useremail, @product.name, @productask)
+
       respond_to do |format|
         format.html { redirect_to product_path(params[:id]), notice: 'Ask was successfully created.' }
         format.json { render json: @productask }

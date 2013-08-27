@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+</head>
+<body>
+<p>你好，你的訂單 <%= @deal.serialnum %> 的狀態已變更為 
+	<% case @deal.status %>
+	<% when 'new' %>
+		新訂單 
+	<% when 'check' %>
+		已收款 
+	<% when 'processing' %>
+		處理中 
+	<% when 'deliver' %>
+		已寄出 
+	<% when 'cancel' %>
+		已取消 
+	<% end %></p>
+<p>訂單詳細內容請登入使用者後台查看。</p>
+</body>
+</html>

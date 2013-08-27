@@ -1,3 +1,4 @@
+#encoding: utf-8
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
@@ -10,6 +11,7 @@ class User < ActiveRecord::Base
 
   validates :tel, :name, :presence => true
   validates :name, uniqueness: true
+  validates :name, format: { with: /^[\w]+$/, message: "只能包含英文字母數字與下底線" }
 
   has_many :products
   has_many :productasks, :through => :products
