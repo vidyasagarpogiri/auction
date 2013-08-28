@@ -32,9 +32,9 @@ class Useradmin::BuyrecordsController < ApplicationController
   	@dealask.deal_id = params[:id]
   	@dealask.save
 
-    @deal = Deal.find(params[:id])
-
-    Sendmail.dealask_new(User.find(@deal.seller_id).email, @deal, @dealask)
+    #send mail to seller
+    @deal = Deal.select("deals.serialnum, users.email as usermail, users.name as username").joins("INNER JOIN users ON deals.seller_id = users.id").find(params[:id])
+    Sendmail.dealvalue_new(@deal, @dealask).deliver
 
   	respond_to do |format|
       format.html { redirect_to useradmin_buyrecord_path(params[:id]) }
@@ -53,6 +53,10 @@ class Useradmin::BuyrecordsController < ApplicationController
     @dealvalue.user_id = current_user.id
     @dealvalue.deal_id = params[:id]
     @dealvalue.save
+
+    #send mail to seller
+    @deal = Deal.select("deals.serialnum, users.email as usermail, users.name as username").joins("INNER JOIN users ON deals.seller_id = users.id").find(params[:id])
+    Sendmail.dealvalue_new(@deal, @productvalue).deliver
 
     respond_to do |format|
       format.html { redirect_to dealvalues_useradmin_buyrecord_path(params[:id]) }

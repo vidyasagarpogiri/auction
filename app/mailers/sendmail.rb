@@ -16,16 +16,18 @@ class Sendmail < ActionMailer::Base
   	mail(:to => [ receiver, "kobanae@summers.com.tw" ], :subject => "交易(#{ @deal.serialnum })狀態變更為#{ @deal.status }")
   end
 
-  def dealask_new( receiver, dealask )
+  def dealask_new( deal, dealask )
+    @deal = deal
   	@dealask = dealask
 
-  	mail(:to => [ receiver, "kobanae@summers.com.tw" ], :subject => "交易(#{ @dealask.serialnum })有新留言")
+  	mail(:to => [ @deal.usermail, "kobanae@summers.com.tw" ], :subject => "交易(#{ @deal.serialnum })有新留言")
   end
 
-  def dealvalue_new( receiver, dealvalue )
+  def dealvalue_new( deal, dealvalue )
+    @deal = deal
   	@dealvalue = dealvalue
 
-  	mail(:to => [ receiver, "kobanae@summers.com.tw" ], :subject => "交易(#{ @dealvalue.serialnum })有新評價")
+  	mail(:to => [ @deal.usermail, "kobanae@summers.com.tw" ], :subject => "交易(#{ @deal.serialnum })有新評價")
   end
 
   def productask_new( receiver, productname, productask )

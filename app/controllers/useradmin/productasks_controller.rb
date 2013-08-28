@@ -41,10 +41,10 @@ class Useradmin::ProductasksController < ApplicationController
   	@productaskre.productask_id = params[:id]
 
   	if(@productaskre.save)
-  		@productask = Productask.select("productasks.*, users.email as usermail, products.name as productname").joins("INNER JOIN users ON productasks.user_id = users.id")joins("INNER JOIN products ON productasks.product_id = products.id").find(params[:id])
+  		@productask = Productask.select("productasks.*, users.email as usermail, products.name as productname").joins("INNER JOIN users ON productasks.user_id = users.id").joins("INNER JOIN products ON productasks.product_id = products.id").find(params[:id])
 
       #send mail for asker
-      Sendmail.productaskre_new(@productask.usermail, @productask, @productaskre)
+      Sendmail.productaskre_new(@productask.usermail, @productask, @productaskre).deliver
 
       respond_to do |format|
         format.html { redirect_to useradmin_productask_path(params[:id]), notice: 'Ask was successfully created.' }

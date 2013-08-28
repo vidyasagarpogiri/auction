@@ -73,7 +73,7 @@ class Useradmin::Changestatus::DealsController < ApplicationController
     @deallog.description = "訂單變更狀態為：" + status
     @deallog.save
 
-    Sendmail.deal_status_change(@deal.buyeremail, @deal)
+    Sendmail.deal_status_change(@deal.buyeremail, @deal).deliver
   end
   
   def find_deal

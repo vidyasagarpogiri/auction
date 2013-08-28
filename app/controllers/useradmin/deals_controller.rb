@@ -32,9 +32,9 @@ class Useradmin::DealsController < ApplicationController
   	@dealask.deal_id = params[:id]
   	@dealask.save
 
-    @deal = Deal.find(params[:id])
-
-    Sendmail.dealask_new(User.find(@deal.buyer_id).email, @deal, @dealask)
+    #send mail to buyer
+    @deal = Deal.select("deals.serialnum, users.email as usermail, users.name as username").joins("INNER JOIN users ON deals.buyer_id = users.id").find(params[:id])
+    Sendmail.dealvalue_new(@deal, @dealask).deliver
 
   	respond_to do |format|
       format.html { redirect_to useradmin_deal_path(params[:id]) }
@@ -54,6 +54,10 @@ class Useradmin::DealsController < ApplicationController
     @dealvalue.deal_id = params[:id]
     @dealvalue.save
 
+    #send mail to buyer
+    @deal = Deal.select("deals.serialnum, users.email as usermail, users.name as username").joins("INNER JOIN users ON deals.buyer_id = users.id").find(params[:id])
+    Sendmail.dealvalue_new(@deal, @productvalue).deliver
+
     respond_to do |format|
       format.html { redirect_to dealvalues_useradmin_deal_path(params[:id]) }
       format.json { render json: @dealvalue }
@@ -61,10 +65,28 @@ class Useradmin::DealsController < ApplicationController
   end
 
   def count_deals
-    @countnew = Deal.where("seller_id = ? AND status = ?", current_user.id, "new").count
-    @countcheck = Deal.where("seller_id = ? AND status = ?", current_user.id, "check").count
-    @countprocessing = Deal.where("seller_id = ? AND status = ?", current_user.id, "processing").count
-    @countdeliver = Deal.where("seller_id = ? AND status = ?", current_user.id, "deliver").count
-    @countcancel = Deal.where("seller_id = ? AND status = ?", current_user.id, "cancel").count
+    @deals = Deal.where("seller_id = ?", current_user.id).all
+
+    @countnew = 0
+    @countcheck = 0
+    @countprocessing = 0
+    @countdeliver = 0
+    @countcancel = 0
+    
+    @deals.each do |deal|
+      case deal.status
+        when "new"
+          @countnew+=1
+        when "check"
+          @countcheck+=1
+        when "processing"
+          @countprocessing+=1
+        when "deliver"
+          @countdeliver+=1
+        when "cancel"
+          @countcancel+=1
+      end
+        
+    end
   end
 end

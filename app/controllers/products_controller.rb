@@ -59,7 +59,7 @@ class ProductsController < ApplicationController
     if(@product.user_id != current_user.id && @productask.save)
 
       #send email to product owner
-      Sendmail.productask_new(@product.useremail, @product.name, @productask)
+      Sendmail.productask_new(@product.useremail, @product.name, @productask).deliver
 
       respond_to do |format|
         format.html { redirect_to product_path(params[:id]), notice: 'Ask was successfully created.' }

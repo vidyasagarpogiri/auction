@@ -4,6 +4,10 @@
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
 </head>
 <body>
+<p>你好，使用者<%= @deal.username %>給訂單<%= @deal.serialnum %>新評價。</p>
+<p>評價：<%= @deal.value %></p>
+<%= simple_format( @deal.comment ) %>
 
+<p>詳細內容請登入使用者後台查看。</p>
 </body>
 </html>

@@ -4,6 +4,9 @@
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
 </head>
 <body>
+<p>你好，使用者<%= @deal.username %>在訂單<%= @deal.serialnum %>新增留言。</p>
+<%= simple_format( @deal.content ) %>
 
+<p>詳細內容請登入使用者後台查看。</p>
 </body>
 </html>

@@ -39,7 +39,7 @@ class DealsController < ApplicationController
           @product.save
         end
 
-        Sendmail.deal_new(current_user.email, @product, @deal)
+        Sendmail.deal_new(current_user.email, @product, @deal).deliver
 
         format.html { redirect_to  finish_deals_path }
         format.json { render json: @deal }
